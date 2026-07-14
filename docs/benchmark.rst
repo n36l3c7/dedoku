@@ -18,16 +18,37 @@ Solve-time distribution
    :class: only-dark
    :alt: Solve-time distribution by difficulty level
 
-========================  ===============  ==========  ===========
-Level                     Solved (logic)   BT median   Lib median
-========================  ===============  ==========  ===========
-1 · Singles               100/100          15.9 ms     **1.1 ms**
-2 · Subsets               100/100          13.1 ms     **1.6 ms**
-3 · Intersections         100/100          5.0 ms      **3.1 ms**
-4 · Advanced              100/100          15.6 ms     **7.5 ms**
-5 · Extreme               89/100           **16.7 ms** 65.4 ms
-**Overall**               **489/500**      12.6 ms     **3.0 ms**
-========================  ===============  ==========  ===========
+.. list-table::
+   :header-rows: 1
+
+   * - Level
+     - Solved (logic)
+     - BT median
+     - Library median
+   * - 1 · Singles
+     - 100/100
+     - 15.9 ms
+     - **1.1 ms**
+   * - 2 · Subsets
+     - 100/100
+     - 13.1 ms
+     - **1.6 ms**
+   * - 3 · Intersections
+     - 100/100
+     - 5.0 ms
+     - **3.1 ms**
+   * - 4 · Advanced
+     - 100/100
+     - 15.6 ms
+     - **7.5 ms**
+   * - 5 · Extreme
+     - 89/100
+     - **16.7 ms**
+     - 65.4 ms
+   * - **Overall**
+     - **489/500**
+     - 12.6 ms
+     - **3.0 ms**
 
 On the 11 extreme puzzles the library cannot crack, its reported time is
 the time to exhaust every technique and stop — never a guess.
