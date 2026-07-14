@@ -1,7 +1,7 @@
 # Dedoku
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.2.0-2a78d6)](https://github.com/n36l3c7/dedoku/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-2a78d6)](https://github.com/n36l3c7/dedoku/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen)](tests/)
@@ -136,8 +136,8 @@ Windows 11. Levels are graded by the hardest technique the original
 ### Solve-time distribution
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-distribution-dark.svg">
-  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="docs/benchmark-distribution-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-dark.svg">
+  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-light.svg">
 </picture>
 
 | Level | Solved by library | BT median | BT p95 | BT max | Library median | Library p95 | Library max |
@@ -168,8 +168,8 @@ Key findings:
 ### Which techniques crack the extreme tier
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-techniques-dark.svg">
-  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="docs/benchmark-techniques-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-dark.svg">
+  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-light.svg">
 </picture>
 
 ### Reproduce it
