@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sudoku-solver"
+version = "0.1.0"
+description = "A pure-Python Sudoku solver that uses only human-style logical deduction techniques (no backtracking)."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "n36l3c7", email = "gervasio.samu@gmail.com" },
+]
+keywords = ["sudoku", "solver", "puzzle", "logic", "deduction"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Games/Entertainment :: Puzzle Games",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/n36l3c7/Sudoku-Solver"
+
+[tool.setuptools.packages.find]
+include = ["sudoku_solver*"]
