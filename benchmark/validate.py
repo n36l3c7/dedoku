@@ -8,9 +8,11 @@ step or unexpected exception is.
 
 Usage::
 
-    python benchmark/validate.py --count 10000 --seed 7
+    python benchmark/validate.py --count 100000 --seed 100 --jobs 8
 
-Exits non-zero if any unsound deduction is found.
+With ``--jobs`` the work is split into seeded batches across processes,
+so large runs scale with the machine. Exits non-zero if any unsound
+deduction is found.
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ import argparse
 import random
 import sys
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -30,6 +33,9 @@ from dedoku import Grid, SudokuSolver  # noqa: E402
 
 _CLUE_TARGETS = (17, 17, 24, 28, 32, 40)
 """Clue targets sampled per puzzle; 17 means fully minimal (hardest)."""
+
+_BATCH = 500
+"""Puzzles per worker batch when running in parallel."""
 
 
 def verify(puzzle: str, solver: SudokuSolver) -> tuple[bool, str | None]:
@@ -74,8 +80,36 @@ def verify(puzzle: str, solver: SudokuSolver) -> tuple[bool, str | None]:
     return grid.is_solved(), None
 
 
+def run_batch(seed: int, count: int) -> tuple[int, int, list[tuple[str, str]]]:
+    """Generate and verify one seeded batch of puzzles.
+
+    :param seed: RNG seed for this batch.
+    :type seed: int
+    :param count: Number of puzzles to generate and verify.
+    :type count: int
+    :returns: ``(solved, stalled, failures)`` for the batch, where each
+        failure is a ``(puzzle, error)`` pair.
+    :rtype: tuple[int, int, list[tuple[str, str]]]
+    """
+    rng = random.Random(seed)
+    solver = SudokuSolver()
+    solved = stalled = 0
+    failures: list[tuple[str, str]] = []
+    for _ in range(count):
+        target = rng.choice(_CLUE_TARGETS)
+        puzzle = make_puzzle(random_solution(rng), rng, target)
+        ok, error = verify(puzzle, solver)
+        if error is not None:
+            failures.append((puzzle, error))
+        elif ok:
+            solved += 1
+        else:
+            stalled += 1
+    return solved, stalled, failures
+
+
 def main() -> int:
-    """Run the validation loop and report a summary.
+    """Run the validation and report a summary.
 
     :returns: Process exit code — 0 when every deduction was sound.
     :rtype: int
@@ -84,29 +118,45 @@ def main() -> int:
     parser.add_argument("--count", type=int, default=1000,
                         help="number of puzzles to validate")
     parser.add_argument("--seed", type=int, default=7,
-                        help="RNG seed for reproducibility")
+                        help="base RNG seed for reproducibility")
+    parser.add_argument("--jobs", type=int, default=1,
+                        help="worker processes (1 = run in-process)")
     args = parser.parse_args()
 
-    rng = random.Random(args.seed)
-    solver = SudokuSolver()
-    solved = stalled = 0
+    batches = [
+        (args.seed * 100_000 + index, min(_BATCH, args.count - index * _BATCH))
+        for index in range((args.count + _BATCH - 1) // _BATCH)
+    ]
+    solved = stalled = done = 0
     failures: list[tuple[str, str]] = []
     start = time.time()
-    for index in range(1, args.count + 1):
-        target = rng.choice(_CLUE_TARGETS)
-        puzzle = make_puzzle(random_solution(rng), rng, target)
-        ok, error = verify(puzzle, solver)
-        if error is not None:
-            failures.append((puzzle, error))
+
+    def absorb(batch_solved: int, batch_stalled: int,
+               batch_failures: list[tuple[str, str]], size: int) -> None:
+        nonlocal solved, stalled, done
+        solved += batch_solved
+        stalled += batch_stalled
+        done += size
+        failures.extend(batch_failures)
+        for puzzle, error in batch_failures:
             print(f"UNSOUND: {error}\n  puzzle: {puzzle}", flush=True)
-        elif ok:
-            solved += 1
-        else:
-            stalled += 1
-        if index % 200 == 0:
-            print(f"{index}/{args.count} solved={solved} "
-                  f"stalled={stalled} unsound={len(failures)} "
+        if done % 5000 < _BATCH:
+            print(f"{done}/{args.count} solved={solved} stalled={stalled} "
+                  f"unsound={len(failures)} "
                   f"elapsed={time.time() - start:.0f}s", flush=True)
+
+    if args.jobs <= 1:
+        for seed, size in batches:
+            absorb(*run_batch(seed, size), size)
+    else:
+        with ProcessPoolExecutor(max_workers=args.jobs) as pool:
+            futures = {
+                pool.submit(run_batch, seed, size): size
+                for seed, size in batches
+            }
+            for future in as_completed(futures):
+                absorb(*future.result(), futures[future])
+
     print(f"DONE puzzles={args.count} solved={solved} stalled={stalled} "
           f"unsound={len(failures)} elapsed={time.time() - start:.0f}s")
     return 1 if failures else 0
