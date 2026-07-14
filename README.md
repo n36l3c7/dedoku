@@ -6,6 +6,7 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
 [![Tests](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml/badge.svg)](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml)
 [![Backtracking](https://img.shields.io/badge/backtracking-never-red)](#solving-philosophy)
+[![Docs](https://img.shields.io/badge/docs-online-2a78d6)](https://n36l3c7.github.io/dedoku/)
 
 A **pure-Python** Sudoku solving library that relies exclusively on
 **human-style logical deduction** — 20 named technique families, from naked
@@ -113,6 +114,23 @@ solver = SudokuSolver(techniques=[NakedSingle(), HiddenSingle(), XYChain()])
 The board model is fully navigable if you want to build your own techniques:
 each `Cell` knows its `row`, `column`, `subgrid`, `candidates`, and `peers`;
 the `Grid` exposes all 27 houses via `rows`, `columns`, `subgrids`, `units`.
+Full guides and API reference: **[n36l3c7.github.io/dedoku](https://n36l3c7.github.io/dedoku/)**.
+
+### Command line
+
+Installing the package also installs the `dedoku` command. Add `--explain`
+to watch the whole reasoning, cell by cell:
+
+```text
+$ dedoku 530070000600195000098000060800060003400803001700020006060000280000419005000080079 --explain
+   1. R5C5 = 5               [Naked Single] R5C5 has 5 as its only candidate
+   2. R5C2 = 2               [Naked Single] R5C2 has 2 as its only candidate
+   ...
+Solved in 51 steps using: Naked Single
+```
+
+Options: puzzle from argument or stdin, `--multi` for puzzles without a
+guaranteed unique solution, exit codes 0/1/2 (solved / stalled / invalid).
 
 ## Implemented techniques
 

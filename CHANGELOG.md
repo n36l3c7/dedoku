@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-07-14
+
+### Added
+- Command-line interface: `dedoku` (also `python -m dedoku`) solves a
+  puzzle from the argument or stdin; `--explain` prints every deduction
+  in order, showing how each cell was filled; `--multi` disables
+  uniqueness-based techniques. Exit codes: 0 solved, 1 stalled,
+  2 invalid input.
+- Documentation site at <https://n36l3c7.github.io/dedoku/> (Sphinx +
+  furo), built from the RST docstrings and deployed from CI on every
+  push: usage guide, CLI reference, per-family technique explanations,
+  benchmark, and full API reference.
+
 ## [0.5.0] - 2026-07-14
 
 API-freeze release on the road to 1.0.
@@ -67,6 +80,7 @@ First release published to PyPI.
 - Logic-only solving engine with the original 13 technique families,
   from naked singles to avoidable rectangles — no backtracking, ever.
 
+[0.6.0]: https://github.com/n36l3c7/dedoku/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/n36l3c7/dedoku/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/n36l3c7/dedoku/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/n36l3c7/dedoku/compare/v0.2.0...v0.3.0
