@@ -62,6 +62,17 @@ Implemented step by step, from simplest to most advanced:
 12. [x] **BUG** (Bivalue Universal Grave)
 13. [x] **Avoidable Rectangles**
 
+Advanced extensions (chains and beyond), added after benchmarking showed the
+first 13 techniques stall on the hardest puzzles:
+
+14. [x] **Unique Rectangles Type 2**
+15. [ ] **Finned X-Wing** and **Finned Swordfish**
+16. [ ] **X-Chain** (basic X-Cycles)
+17. [ ] **XY-Chain**
+18. [ ] **3D Medusa**
+19. [ ] **ALS-XZ** (Almost Locked Sets)
+20. [ ] **AIC** (Alternating Inference Chains)
+
 ## Usage
 
 ```python

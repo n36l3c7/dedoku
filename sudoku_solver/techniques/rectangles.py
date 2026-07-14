@@ -19,7 +19,7 @@ from .base import Step, Technique
 if TYPE_CHECKING:
     from ..grid import Grid
 
-__all__ = ["UniqueRectangle", "AvoidableRectangle"]
+__all__ = ["UniqueRectangle", "UniqueRectangleType2", "AvoidableRectangle"]
 
 
 class UniqueRectangle(Technique):
@@ -82,6 +82,80 @@ class UniqueRectangle(Technique):
                             f"floor {floor_text}: {roof.label} can hold "
                             f"neither digit, or the puzzle would have two "
                             f"solutions"
+                        ),
+                        eliminations=tuple(eliminations),
+                    )
+        return None
+
+
+class UniqueRectangleType2(Technique):
+    """Type 2 Unique Rectangle: the shared extra digit must sit on the roof.
+
+    Two corners of a two-box rectangle (the *floor*) are bivalue cells with
+    the same pair ``{a, b}``; the other two corners (the *roof*) hold
+    exactly ``{a, b, c}`` with the same extra digit ``c``. If neither roof
+    cell were ``c``, all four corners would collapse to the deadly pair
+    pattern, so ``c`` occupies one of the roof cells and can be eliminated
+    from every other cell that sees them both.
+    """
+
+    name = "Unique Rectangle Type 2"
+
+    def apply(self, grid: Grid) -> Step | None:
+        """Find the first productive Type 2 unique rectangle.
+
+        :param grid: The board to inspect and mutate.
+        :type grid: Grid
+        :returns: The eliminations performed, or ``None`` if no productive
+            pattern exists.
+        :rtype: Step | None
+        """
+        for row_one, row_two in combinations(range(9), 2):
+            for col_one, col_two in combinations(range(9), 2):
+                if (row_one // 3 == row_two // 3) == (
+                    col_one // 3 == col_two // 3
+                ):
+                    continue
+                corners = (
+                    grid.cell(row_one, col_one),
+                    grid.cell(row_one, col_two),
+                    grid.cell(row_two, col_one),
+                    grid.cell(row_two, col_two),
+                )
+                if any(cell.is_solved for cell in corners):
+                    continue
+                floor = [cell for cell in corners if cell.is_bivalue]
+                roof = [cell for cell in corners if not cell.is_bivalue]
+                if len(floor) != 2 or floor[0].candidates != floor[1].candidates:
+                    continue
+                pair = floor[0].candidates
+                extras = {cell.candidates - pair for cell in roof}
+                if len(extras) != 1:
+                    continue
+                extra = next(iter(extras))
+                if len(extra) != 1:
+                    continue
+                if any(not pair < cell.candidates for cell in roof):
+                    continue
+                digit = next(iter(extra))
+                eliminations: list[tuple[int, int, int]] = []
+                common = set(roof[0].peers) & set(roof[1].peers)
+                for cell in sorted(common, key=lambda c: c.position):
+                    if cell in corners:
+                        continue
+                    if cell.remove_candidate(digit):
+                        eliminations.append(
+                            (cell.row_index, cell.column_index, digit)
+                        )
+                if eliminations:
+                    pair_text = ", ".join(str(d) for d in sorted(pair))
+                    return Step(
+                        technique=self.name,
+                        description=(
+                            f"unique rectangle type 2 on {{{pair_text}}}: "
+                            f"digit {digit} must occupy {roof[0].label} or "
+                            f"{roof[1].label} to avoid the deadly pattern, "
+                            f"so it is removed from every cell seeing both"
                         ),
                         eliminations=tuple(eliminations),
                     )

@@ -31,6 +31,7 @@ from .techniques import (
     Swordfish,
     Technique,
     UniqueRectangle,
+    UniqueRectangleType2,
     WWing,
     XWing,
     XYZWing,
@@ -110,6 +111,7 @@ class SudokuSolver:
             XYZWing(),
             BivalueUniversalGrave(),
             AvoidableRectangle(),
+            UniqueRectangleType2(),
         )
 
     @property
