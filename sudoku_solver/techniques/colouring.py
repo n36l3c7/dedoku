@@ -29,23 +29,6 @@ if TYPE_CHECKING:
 __all__ = ["SimpleColouring"]
 
 
-def _sees(first: Cell, second: Cell) -> bool:
-    """Report whether two distinct cells share a house.
-
-    :param first: One cell.
-    :type first: Cell
-    :param second: Another cell.
-    :type second: Cell
-    :returns: ``True`` if the cells share a row, column, or subgrid.
-    :rtype: bool
-    """
-    return (
-        first.row_index == second.row_index
-        or first.column_index == second.column_index
-        or first.subgrid.index == second.subgrid.index
-    )
-
-
 class SimpleColouring(Technique):
     """Eliminate a digit through two-colour conjugate chains."""
 
@@ -150,7 +133,7 @@ class SimpleColouring(Technique):
                 (
                     (first, second)
                     for first, second in combinations(group, 2)
-                    if _sees(first, second)
+                    if first.sees(second)
                 ),
                 None,
             )
@@ -194,8 +177,8 @@ class SimpleColouring(Technique):
         for cell in grid.cells:
             if cell in colours or digit not in cell.candidates:
                 continue
-            if any(_sees(cell, other) for other in group_zero) and any(
-                _sees(cell, other) for other in group_one
+            if any(cell.sees(other) for other in group_zero) and any(
+                cell.sees(other) for other in group_one
             ):
                 cell.remove_candidate(digit)
                 eliminations.append(

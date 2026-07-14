@@ -173,6 +173,23 @@ class Cell:
                     seen[id(cell)] = cell
         return tuple(sorted(seen.values(), key=lambda cell: cell.position))
 
+    def sees(self, other: Cell) -> bool:
+        """Report whether ``other`` shares a house with this cell.
+
+        A cell never sees itself.
+
+        :param other: The cell to test against.
+        :type other: Cell
+        :returns: ``True`` if the two cells share a row, column, or
+            subgrid.
+        :rtype: bool
+        """
+        return other is not self and (
+            self._row_index == other.row_index
+            or self._column_index == other.column_index
+            or self.subgrid.index == other.subgrid.index
+        )
+
     # ------------------------------------------------------------------
     # Mutation
     # ------------------------------------------------------------------

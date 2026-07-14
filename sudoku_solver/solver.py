@@ -27,6 +27,7 @@ from .techniques import (
     SimpleColouring,
     Step,
     Technique,
+    WWing,
     XWing,
 )
 
@@ -96,6 +97,7 @@ class SudokuSolver:
             XWing(),
             ChuteRemotePairs(),
             SimpleColouring(),
+            WWing(),
         )
 
     @property
