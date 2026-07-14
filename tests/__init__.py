@@ -1,1 +1,1 @@
-"""Test suite for the :mod:`sudoku_solver` package."""
+"""Test suite for the :mod:`dedoku` package."""

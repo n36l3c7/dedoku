@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from backtracking import solve_backtracking  # noqa: E402
-from sudoku_solver import Grid, SudokuSolver  # noqa: E402
+from dedoku import Grid, SudokuSolver  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 INPUT = HERE / "puzzles_500.csv"

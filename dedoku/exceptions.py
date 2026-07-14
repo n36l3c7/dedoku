@@ -1,4 +1,4 @@
-"""Exception hierarchy for the :mod:`sudoku_solver` package.
+"""Exception hierarchy for the :mod:`dedoku` package.
 
 All exceptions raised by this library derive from :class:`SudokuError`,
 so callers can catch a single base class to handle any library failure.
@@ -10,7 +10,7 @@ __all__ = ["SudokuError", "InvalidGridError", "ContradictionError"]
 
 
 class SudokuError(Exception):
-    """Base class for every exception raised by :mod:`sudoku_solver`."""
+    """Base class for every exception raised by :mod:`dedoku`."""
 
 
 class InvalidGridError(SudokuError):

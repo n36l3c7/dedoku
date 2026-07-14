@@ -1,10 +1,10 @@
-"""Unit tests for :mod:`sudoku_solver.grid` and :mod:`sudoku_solver.units`."""
+"""Unit tests for :mod:`dedoku.grid` and :mod:`dedoku.units`."""
 
 from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid, InvalidGridError
+from dedoku import Grid, InvalidGridError
 
 PUZZLE = (
     "530070000"

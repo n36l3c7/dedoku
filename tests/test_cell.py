@@ -1,10 +1,10 @@
-"""Unit tests for :mod:`sudoku_solver.cell`."""
+"""Unit tests for :mod:`dedoku.cell`."""
 
 from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Cell, ContradictionError, DIGITS, Grid
+from dedoku import Cell, ContradictionError, DIGITS, Grid
 
 
 class CellStateTests(unittest.TestCase):

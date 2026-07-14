@@ -26,8 +26,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sudoku_solver import Grid, SudokuSolver  # noqa: E402
-from sudoku_solver.techniques import (  # noqa: E402
+from dedoku import Grid, SudokuSolver  # noqa: E402
+from dedoku.techniques import (  # noqa: E402
     AvoidableRectangle,
     BivalueUniversalGrave,
     ChuteRemotePairs,

@@ -1,8 +1,8 @@
 """Logical solving techniques, ordered from simplest to most advanced.
 
-Each technique is a stateless :class:`~sudoku_solver.techniques.base.Technique`
+Each technique is a stateless :class:`~dedoku.techniques.base.Technique`
 subclass. The default pipeline used by
-:class:`~sudoku_solver.solver.SudokuSolver` instantiates them in difficulty
+:class:`~dedoku.solver.SudokuSolver` instantiates them in difficulty
 order; further strategies (intersection removal, X-Wing, colouring, wings,
 uniqueness arguments, ...) will extend this package.
 """

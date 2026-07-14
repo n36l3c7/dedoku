@@ -1,7 +1,7 @@
-# Sudoku-Solver
+# Dedoku
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.2.0-2a78d6)](https://github.com/n36l3c7/Sudoku-Solver/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-2a78d6)](https://github.com/n36l3c7/dedoku/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen)](tests/)
@@ -39,8 +39,8 @@ out of 100; everything below that tier is solved outright.
 ## Installation
 
 ```bash
-git clone https://github.com/n36l3c7/Sudoku-Solver.git
-cd Sudoku-Solver
+git clone https://github.com/n36l3c7/dedoku.git
+cd dedoku
 pip install -e .
 ```
 
@@ -49,7 +49,7 @@ No dependencies are installed — the package is the code you cloned.
 ## Usage
 
 ```python
-from sudoku_solver import Grid, SudokuSolver
+from dedoku import Grid, SudokuSolver
 
 puzzle = (
     "530070000"
@@ -82,8 +82,8 @@ characters `|`, `-`, `+` are ignored, so pretty-printed boards parse back.
 Need a custom pipeline? Pass any sequence of techniques, tried in order:
 
 ```python
-from sudoku_solver import SudokuSolver
-from sudoku_solver.techniques import HiddenSingle, NakedSingle, XYChain
+from dedoku import SudokuSolver
+from dedoku.techniques import HiddenSingle, NakedSingle, XYChain
 
 solver = SudokuSolver(techniques=[NakedSingle(), HiddenSingle(), XYChain()])
 ```
@@ -99,26 +99,26 @@ restarting from the simplest after every deduction.
 
 | # | Family | Classes | Module |
 |---|--------|---------|--------|
-| 1 | Naked Candidates | `NakedSingle`, `NakedPair`, `NakedTriple`, `NakedQuad` | [naked.py](sudoku_solver/techniques/naked.py) |
-| 2 | Hidden Candidates | `HiddenSingle`, `HiddenPair`, `HiddenTriple`, `HiddenQuad` | [hidden.py](sudoku_solver/techniques/hidden.py) |
-| 3 | Intersection Removal | `PointingCandidates`, `ClaimingCandidates` | [intersections.py](sudoku_solver/techniques/intersections.py) |
-| 4 | X-Wing | `XWing` | [fish.py](sudoku_solver/techniques/fish.py) |
-| 5 | Chute Remote Pairs | `ChuteRemotePairs` | [chute.py](sudoku_solver/techniques/chute.py) |
-| 6 | Simple Colouring | `SimpleColouring` | [colouring.py](sudoku_solver/techniques/colouring.py) |
-| 7 | W-Wing | `WWing` | [wwing.py](sudoku_solver/techniques/wwing.py) |
-| 8 | Y-Wing (XY-Wing) | `YWing` | [wings.py](sudoku_solver/techniques/wings.py) |
-| 9 | Unique Rectangles | `UniqueRectangle` (Type 1) | [rectangles.py](sudoku_solver/techniques/rectangles.py) |
-| 10 | Swordfish | `Swordfish` | [fish.py](sudoku_solver/techniques/fish.py) |
-| 11 | XYZ-Wing | `XYZWing` | [wings.py](sudoku_solver/techniques/wings.py) |
-| 12 | BUG (Bivalue Universal Grave) | `BivalueUniversalGrave` | [bug.py](sudoku_solver/techniques/bug.py) |
-| 13 | Avoidable Rectangles | `AvoidableRectangle` | [rectangles.py](sudoku_solver/techniques/rectangles.py) |
-| 14 | Unique Rectangles Type 2 | `UniqueRectangleType2` | [rectangles.py](sudoku_solver/techniques/rectangles.py) |
-| 15 | Finned Fish | `FinnedXWing`, `FinnedSwordfish` | [fish.py](sudoku_solver/techniques/fish.py) |
-| 16 | X-Chain (basic X-Cycles) | `XChain` | [chains.py](sudoku_solver/techniques/chains.py) |
-| 17 | XY-Chain | `XYChain` | [chains.py](sudoku_solver/techniques/chains.py) |
-| 18 | 3D Medusa | `Medusa3D` | [medusa.py](sudoku_solver/techniques/medusa.py) |
-| 19 | ALS-XZ (Almost Locked Sets) | `AlsXz` | [als.py](sudoku_solver/techniques/als.py) |
-| 20 | AIC (Alternating Inference Chains) | `AIC` | [aic.py](sudoku_solver/techniques/aic.py) |
+| 1 | Naked Candidates | `NakedSingle`, `NakedPair`, `NakedTriple`, `NakedQuad` | [naked.py](dedoku/techniques/naked.py) |
+| 2 | Hidden Candidates | `HiddenSingle`, `HiddenPair`, `HiddenTriple`, `HiddenQuad` | [hidden.py](dedoku/techniques/hidden.py) |
+| 3 | Intersection Removal | `PointingCandidates`, `ClaimingCandidates` | [intersections.py](dedoku/techniques/intersections.py) |
+| 4 | X-Wing | `XWing` | [fish.py](dedoku/techniques/fish.py) |
+| 5 | Chute Remote Pairs | `ChuteRemotePairs` | [chute.py](dedoku/techniques/chute.py) |
+| 6 | Simple Colouring | `SimpleColouring` | [colouring.py](dedoku/techniques/colouring.py) |
+| 7 | W-Wing | `WWing` | [wwing.py](dedoku/techniques/wwing.py) |
+| 8 | Y-Wing (XY-Wing) | `YWing` | [wings.py](dedoku/techniques/wings.py) |
+| 9 | Unique Rectangles | `UniqueRectangle` (Type 1) | [rectangles.py](dedoku/techniques/rectangles.py) |
+| 10 | Swordfish | `Swordfish` | [fish.py](dedoku/techniques/fish.py) |
+| 11 | XYZ-Wing | `XYZWing` | [wings.py](dedoku/techniques/wings.py) |
+| 12 | BUG (Bivalue Universal Grave) | `BivalueUniversalGrave` | [bug.py](dedoku/techniques/bug.py) |
+| 13 | Avoidable Rectangles | `AvoidableRectangle` | [rectangles.py](dedoku/techniques/rectangles.py) |
+| 14 | Unique Rectangles Type 2 | `UniqueRectangleType2` | [rectangles.py](dedoku/techniques/rectangles.py) |
+| 15 | Finned Fish | `FinnedXWing`, `FinnedSwordfish` | [fish.py](dedoku/techniques/fish.py) |
+| 16 | X-Chain (basic X-Cycles) | `XChain` | [chains.py](dedoku/techniques/chains.py) |
+| 17 | XY-Chain | `XYChain` | [chains.py](dedoku/techniques/chains.py) |
+| 18 | 3D Medusa | `Medusa3D` | [medusa.py](dedoku/techniques/medusa.py) |
+| 19 | ALS-XZ (Almost Locked Sets) | `AlsXz` | [als.py](dedoku/techniques/als.py) |
+| 20 | AIC (Alternating Inference Chains) | `AIC` | [aic.py](dedoku/techniques/aic.py) |
 
 Uniqueness-based techniques (9, 12, 13, 14) assume the puzzle has exactly one
 solution — the standard convention for published Sudokus.
@@ -136,8 +136,8 @@ Windows 11. Levels are graded by the hardest technique the original
 ### Solve-time distribution
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-distribution-dark.svg">
-  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="docs/benchmark-distribution-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-dark.svg">
+  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-light.svg">
 </picture>
 
 | Level | Solved by library | BT median | BT p95 | BT max | Library median | Library p95 | Library max |
@@ -168,8 +168,8 @@ Key findings:
 ### Which techniques crack the extreme tier
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-techniques-dark.svg">
-  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="docs/benchmark-techniques-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-dark.svg">
+  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-light.svg">
 </picture>
 
 ### Reproduce it

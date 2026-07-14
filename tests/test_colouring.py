@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid
-from sudoku_solver.techniques import SimpleColouring
+from dedoku import Grid
+from dedoku.techniques import SimpleColouring
 
 
 def _limit_homes(grid: Grid, digit: int, unit_cells, keep) -> None:

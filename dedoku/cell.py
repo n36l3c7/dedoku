@@ -3,8 +3,8 @@
 This module defines :class:`Cell`, the smallest building block of a Sudoku
 grid. A cell knows its position, its solved value (if any), its remaining
 candidate digits, and holds references to the three houses it belongs to:
-its :class:`~sudoku_solver.units.Row`, :class:`~sudoku_solver.units.Column`,
-and :class:`~sudoku_solver.units.Subgrid`.
+its :class:`~dedoku.units.Row`, :class:`~dedoku.units.Column`,
+and :class:`~dedoku.units.Subgrid`.
 """
 
 from __future__ import annotations
@@ -63,7 +63,7 @@ class Cell:
     def attach(self, row: Row, column: Column, subgrid: Subgrid) -> None:
         """Wire the cell to its three houses and register it with each.
 
-        This is called once by :class:`~sudoku_solver.grid.Grid` while the
+        This is called once by :class:`~dedoku.grid.Grid` while the
         board is being built and must not be called again afterwards.
 
         :param row: The row the cell belongs to.
@@ -247,7 +247,7 @@ class Cell:
     def mark_as_given(self) -> None:
         """Flag the cell's value as an original clue of the puzzle.
 
-        This is called by :meth:`sudoku_solver.grid.Grid.from_string`
+        This is called by :meth:`dedoku.grid.Grid.from_string`
         right after each given is placed.
 
         :raises ValueError: If the cell has no value yet.

@@ -65,7 +65,7 @@ class Technique(ABC):
         :returns: A record of the deduction, or ``None`` if the pattern
             does not occur anywhere on the board.
         :rtype: Step | None
-        :raises sudoku_solver.exceptions.ContradictionError: If applying
+        :raises dedoku.exceptions.ContradictionError: If applying
             the deduction reveals an inconsistent board state.
         """
 

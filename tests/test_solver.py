@@ -1,10 +1,10 @@
-"""End-to-end tests for :class:`sudoku_solver.solver.SudokuSolver`."""
+"""End-to-end tests for :class:`dedoku.solver.SudokuSolver`."""
 
 from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid, SudokuSolver
+from dedoku import Grid, SudokuSolver
 
 EASY_PUZZLE = (
     "530070000"
@@ -83,7 +83,7 @@ class SolverTests(unittest.TestCase):
 
     def test_custom_pipeline_is_respected(self) -> None:
         """A solver built with an explicit pipeline uses exactly that."""
-        from sudoku_solver.techniques import NakedSingle
+        from dedoku.techniques import NakedSingle
 
         solver = SudokuSolver(techniques=[NakedSingle()])
         self.assertEqual(len(solver.techniques), 1)

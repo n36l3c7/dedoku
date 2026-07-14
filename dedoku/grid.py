@@ -1,9 +1,9 @@
 """The full 9x9 Sudoku board.
 
-:class:`Grid` builds the 81 :class:`~sudoku_solver.cell.Cell` objects, wires
-each of them to its :class:`~sudoku_solver.units.Row`,
-:class:`~sudoku_solver.units.Column`, and
-:class:`~sudoku_solver.units.Subgrid`, and offers parsing and serialisation
+:class:`Grid` builds the 81 :class:`~dedoku.cell.Cell` objects, wires
+each of them to its :class:`~dedoku.units.Row`,
+:class:`~dedoku.units.Column`, and
+:class:`~dedoku.units.Subgrid`, and offers parsing and serialisation
 helpers.
 """
 

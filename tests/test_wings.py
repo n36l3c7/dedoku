@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid
-from sudoku_solver.techniques import XYZWing, YWing
+from dedoku import Grid
+from dedoku.techniques import XYZWing, YWing
 
 
 def _set_candidates(grid: Grid, position: tuple[int, int], keep: set[int]) -> None:

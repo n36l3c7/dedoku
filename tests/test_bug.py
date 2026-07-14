@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid
-from sudoku_solver.techniques import BivalueUniversalGrave
+from dedoku import Grid
+from dedoku.techniques import BivalueUniversalGrave
 
 
 def _set_candidates(grid: Grid, position: tuple[int, int], keep: set[int]) -> None:

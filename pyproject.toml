@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sudoku-solver"
+name = "dedoku"
 version = "0.2.0"
 description = "A pure-Python Sudoku solver that uses only human-style logical deduction techniques (no backtracking)."
 readme = "README.md"
@@ -29,7 +29,7 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Repository = "https://github.com/n36l3c7/Sudoku-Solver"
+Repository = "https://github.com/n36l3c7/dedoku"
 
 [tool.setuptools.packages.find]
-include = ["sudoku_solver*"]
+include = ["dedoku*"]

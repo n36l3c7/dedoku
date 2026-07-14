@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid
-from sudoku_solver.techniques import ClaimingCandidates, PointingCandidates
+from dedoku import Grid
+from dedoku.techniques import ClaimingCandidates, PointingCandidates
 
 
 class PointingCandidatesTests(unittest.TestCase):

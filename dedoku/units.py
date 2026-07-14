@@ -41,7 +41,7 @@ class Unit:
     def register(self, cell: Cell) -> None:
         """Add ``cell`` to the unit while the grid is being built.
 
-        This is called by :meth:`sudoku_solver.cell.Cell.attach` and must
+        This is called by :meth:`dedoku.cell.Cell.attach` and must
         not be used afterwards.
 
         :param cell: The cell to register.

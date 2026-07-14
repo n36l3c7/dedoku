@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import unittest
 
-from sudoku_solver import Grid
-from sudoku_solver.techniques import XChain, XYChain
+from dedoku import Grid
+from dedoku.techniques import XChain, XYChain
 
 
 def _restrict_digit_to_rows(

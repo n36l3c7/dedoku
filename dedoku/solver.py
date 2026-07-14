@@ -146,7 +146,7 @@ class SudokuSolver:
         :type grid: Grid
         :returns: The session outcome with the full list of steps.
         :rtype: SolveResult
-        :raises sudoku_solver.exceptions.ContradictionError: If the board
+        :raises dedoku.exceptions.ContradictionError: If the board
             reaches an impossible state, meaning the puzzle has no solution.
         """
         steps: list[Step] = []

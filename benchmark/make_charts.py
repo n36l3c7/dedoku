@@ -16,7 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sudoku_solver import Grid, SudokuSolver  # noqa: E402
+from dedoku import Grid, SudokuSolver  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 DOCS = HERE.parent / "docs"

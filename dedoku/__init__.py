@@ -5,7 +5,7 @@ The package exposes an object-oriented board model (:class:`Cell`,
 logic-only solving engine (:class:`SudokuSolver`) that never resorts to
 backtracking. It has no external dependencies.
 
-Individual techniques live in :mod:`sudoku_solver.techniques`.
+Individual techniques live in :mod:`dedoku.techniques`.
 """
 
 from __future__ import annotations
