@@ -55,7 +55,7 @@ Implemented step by step, from simplest to most advanced:
 5. [x] **Chute Remote Pairs**
 6. [x] **Simple Colouring**
 7. [x] **W-Wing**
-8. [ ] **Y-Wing** (XY-Wing)
+8. [x] **Y-Wing** (XY-Wing)
 9. [ ] **Rectangle Elimination** (Unique Rectangles)
 10. [ ] **Swordfish**
 11. [ ] **XYZ-Wing**

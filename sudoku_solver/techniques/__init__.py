@@ -16,6 +16,7 @@ from .fish import XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
+from .wings import YWing
 from .wwing import WWing
 
 __all__ = [
@@ -35,4 +36,5 @@ __all__ = [
     "ChuteRemotePairs",
     "SimpleColouring",
     "WWing",
+    "YWing",
 ]

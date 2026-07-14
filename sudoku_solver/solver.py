@@ -29,6 +29,7 @@ from .techniques import (
     Technique,
     WWing,
     XWing,
+    YWing,
 )
 
 if TYPE_CHECKING:
@@ -98,6 +99,7 @@ class SudokuSolver:
             ChuteRemotePairs(),
             SimpleColouring(),
             WWing(),
+            YWing(),
         )
 
     @property
