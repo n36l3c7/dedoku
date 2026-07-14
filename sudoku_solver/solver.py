@@ -25,6 +25,7 @@ from .techniques import (
     PointingCandidates,
     Step,
     Technique,
+    XWing,
 )
 
 if TYPE_CHECKING:
@@ -90,6 +91,7 @@ class SudokuSolver:
             HiddenQuad(),
             PointingCandidates(),
             ClaimingCandidates(),
+            XWing(),
         )
 
     @property
