@@ -35,6 +35,7 @@ from .techniques import (
     UniqueRectangle,
     UniqueRectangleType2,
     WWing,
+    XChain,
     XWing,
     XYZWing,
     YWing,
@@ -116,6 +117,7 @@ class SudokuSolver:
             UniqueRectangleType2(),
             FinnedXWing(),
             FinnedSwordfish(),
+            XChain(),
         )
 
     @property
