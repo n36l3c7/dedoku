@@ -32,9 +32,9 @@ dependencies = []
 dedoku = "dedoku.cli:main"
 
 [project.urls]
-Repository = "https://github.com/n36l3c7/dedoku"
-Documentation = "https://n36l3c7.github.io/dedoku/"
-Changelog = "https://github.com/n36l3c7/dedoku/blob/main/CHANGELOG.md"
+Repository = "https://github.com/n36l3c7/Dedoku"
+Documentation = "https://n36l3c7.github.io/Dedoku/"
+Changelog = "https://github.com/n36l3c7/Dedoku/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["dedoku*"]

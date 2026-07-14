@@ -49,7 +49,7 @@ is a promise.
   in order, showing how each cell was filled; `--multi` disables
   uniqueness-based techniques. Exit codes: 0 solved, 1 stalled,
   2 invalid input.
-- Documentation site at <https://n36l3c7.github.io/dedoku/> (Sphinx +
+- Documentation site at <https://n36l3c7.github.io/Dedoku/> (Sphinx +
   furo), built from the RST docstrings and deployed from CI on every
   push: usage guide, CLI reference, per-family technique explanations,
   benchmark, and full API reference.
@@ -117,11 +117,11 @@ First release published to PyPI.
 - Logic-only solving engine with the original 13 technique families,
   from naked singles to avoidable rectangles — no backtracking, ever.
 
-[1.0.0]: https://github.com/n36l3c7/dedoku/compare/v0.7.0...v1.0.0
-[0.7.0]: https://github.com/n36l3c7/dedoku/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/n36l3c7/dedoku/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/n36l3c7/dedoku/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/n36l3c7/dedoku/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/n36l3c7/dedoku/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/n36l3c7/dedoku/compare/8a501f8...v0.2.0
-[0.1.0]: https://github.com/n36l3c7/dedoku/commits/22c34c6
+[1.0.0]: https://github.com/n36l3c7/Dedoku/compare/v0.7.0...v1.0.0
+[0.7.0]: https://github.com/n36l3c7/Dedoku/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/n36l3c7/Dedoku/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/n36l3c7/Dedoku/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/n36l3c7/Dedoku/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/n36l3c7/Dedoku/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/n36l3c7/Dedoku/compare/8a501f8...v0.2.0
+[0.1.0]: https://github.com/n36l3c7/Dedoku/commits/22c34c6

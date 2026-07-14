@@ -41,6 +41,6 @@ run: 100,000 puzzles, zero unsound steps).
 Links
 -----
 
-- `Source code <https://github.com/n36l3c7/dedoku>`_
+- `Source code <https://github.com/n36l3c7/Dedoku>`_
 - `PyPI project <https://pypi.org/project/dedoku/>`_
-- `Issue tracker <https://github.com/n36l3c7/dedoku/issues>`_
+- `Issue tracker <https://github.com/n36l3c7/Dedoku/issues>`_

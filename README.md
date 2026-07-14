@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/_static/banner-dark.svg">
-  <img alt="dedoku — sudoku, solved by pure logic" width="640" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/_static/banner-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/_static/banner-dark.svg">
+  <img alt="dedoku — sudoku, solved by pure logic" width="640" src="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/_static/banner-light.svg">
 </picture>
 
 </div>
@@ -11,9 +11,9 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/dedoku?logo=python&logoColor=white)](https://pypi.org/project/dedoku/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
-[![Tests](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml/badge.svg)](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml)
+[![Tests](https://github.com/n36l3c7/Dedoku/actions/workflows/tests.yml/badge.svg)](https://github.com/n36l3c7/Dedoku/actions/workflows/tests.yml)
 [![Backtracking](https://img.shields.io/badge/backtracking-opt--in%20only-red)](#solving-philosophy)
-[![Docs](https://img.shields.io/badge/docs-online-2a78d6)](https://n36l3c7.github.io/dedoku/)
+[![Docs](https://img.shields.io/badge/docs-online-2a78d6)](https://n36l3c7.github.io/Dedoku/)
 
 A **pure-Python** Sudoku solving library that relies exclusively on
 **human-style logical deduction** — 20 named technique families, from naked
@@ -57,8 +57,8 @@ pip install dedoku
 Or from source:
 
 ```bash
-git clone https://github.com/n36l3c7/dedoku.git
-cd dedoku
+git clone https://github.com/n36l3c7/Dedoku.git
+cd Dedoku
 pip install -e .
 ```
 
@@ -129,7 +129,7 @@ solver = SudokuSolver(techniques=[NakedSingle(), HiddenSingle(), XYChain()])
 The board model is fully navigable if you want to build your own techniques:
 each `Cell` knows its `row`, `column`, `subgrid`, `candidates`, and `peers`;
 the `Grid` exposes all 27 houses via `rows`, `columns`, `subgrids`, `units`.
-Full guides and API reference: **[n36l3c7.github.io/dedoku](https://n36l3c7.github.io/dedoku/)**.
+Full guides and API reference: **[n36l3c7.github.io/Dedoku](https://n36l3c7.github.io/Dedoku/)**.
 
 ### Command line
 
@@ -196,8 +196,8 @@ Windows 11. Levels are graded by the hardest technique the original
 ### Solve-time distribution
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-dark.svg">
-  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-distribution-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/benchmark-distribution-dark.svg">
+  <img alt="Solve-time distribution by difficulty level: one dot per puzzle on a logarithmic ms scale, backtracking vs logic library, with medians marked" src="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/benchmark-distribution-light.svg">
 </picture>
 
 | Level | Solved by library | BT median | BT p95 | BT max | Library median | Library p95 | Library max |
@@ -228,8 +228,8 @@ Key findings:
 ### Which techniques crack the extreme tier
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-dark.svg">
-  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/benchmark-techniques-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/benchmark-techniques-dark.svg">
+  <img alt="Number of solved extreme puzzles in which each advanced technique fired, XY-Chain leading with 55 of 89" src="https://raw.githubusercontent.com/n36l3c7/Dedoku/main/docs/benchmark-techniques-light.svg">
 </picture>
 
 ### Reproduce it
