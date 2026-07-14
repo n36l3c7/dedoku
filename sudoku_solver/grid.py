@@ -88,6 +88,7 @@ class Grid:
                 raise InvalidGridError(
                     f"the givens contradict each other: {exc}"
                 ) from exc
+            grid._cells[position].mark_as_given()
         return grid
 
     # ------------------------------------------------------------------

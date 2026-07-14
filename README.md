@@ -60,7 +60,7 @@ Implemented step by step, from simplest to most advanced:
 10. [x] **Swordfish**
 11. [x] **XYZ-Wing**
 12. [x] **BUG** (Bivalue Universal Grave)
-13. [ ] **Avoidable Rectangles**
+13. [x] **Avoidable Rectangles**
 
 ## Usage
 

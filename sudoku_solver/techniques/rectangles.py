@@ -19,7 +19,7 @@ from .base import Step, Technique
 if TYPE_CHECKING:
     from ..grid import Grid
 
-__all__ = ["UniqueRectangle"]
+__all__ = ["UniqueRectangle", "AvoidableRectangle"]
 
 
 class UniqueRectangle(Technique):
@@ -85,4 +85,74 @@ class UniqueRectangle(Technique):
                         ),
                         eliminations=tuple(eliminations),
                     )
+        return None
+
+
+class AvoidableRectangle(Technique):
+    """Type 1 Avoidable Rectangle: avoid recreating a swappable rectangle.
+
+    Take a two-box rectangle with three corners solved *during solving*
+    (none of them givens), where the two corners sharing a line with the
+    remaining unsolved corner hold the same digit ``b`` and the diagonal
+    corner holds ``a``. If the unsolved corner took ``a``, the four values
+    ``a, b / b, a`` could be swapped without touching any given, so the
+    puzzle would have a second solution: ``a`` can be eliminated.
+    """
+
+    name = "Avoidable Rectangle"
+
+    def apply(self, grid: Grid) -> Step | None:
+        """Find the first productive Type 1 avoidable rectangle.
+
+        :param grid: The board to inspect and mutate.
+        :type grid: Grid
+        :returns: The elimination performed, or ``None`` if no productive
+            pattern exists.
+        :rtype: Step | None
+        """
+        for row_one, row_two in combinations(range(9), 2):
+            for col_one, col_two in combinations(range(9), 2):
+                if (row_one // 3 == row_two // 3) == (
+                    col_one // 3 == col_two // 3
+                ):
+                    continue
+                corners = (
+                    grid.cell(row_one, col_one),
+                    grid.cell(row_one, col_two),
+                    grid.cell(row_two, col_one),
+                    grid.cell(row_two, col_two),
+                )
+                unsolved = [cell for cell in corners if not cell.is_solved]
+                if len(unsolved) != 1:
+                    continue
+                target = unsolved[0]
+                solved = [cell for cell in corners if cell is not target]
+                if any(cell.is_given for cell in solved):
+                    continue
+                diagonal = next(
+                    cell
+                    for cell in solved
+                    if cell.row_index != target.row_index
+                    and cell.column_index != target.column_index
+                )
+                sides = [cell for cell in solved if cell is not diagonal]
+                if sides[0].value != sides[1].value:
+                    continue
+                digit = diagonal.value
+                assert digit is not None
+                if not target.remove_candidate(digit):
+                    continue
+                return Step(
+                    technique=self.name,
+                    description=(
+                        f"avoidable rectangle: {digit} in {target.label} "
+                        f"would let the solved, non-given corners "
+                        f"{', '.join(cell.label for cell in solved)} form "
+                        f"a swappable rectangle, so the puzzle would have "
+                        f"two solutions"
+                    ),
+                    eliminations=(
+                        (target.row_index, target.column_index, digit),
+                    ),
+                )
         return None

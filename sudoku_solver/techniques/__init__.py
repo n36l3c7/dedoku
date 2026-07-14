@@ -17,7 +17,7 @@ from .fish import Swordfish, XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
-from .rectangles import UniqueRectangle
+from .rectangles import AvoidableRectangle, UniqueRectangle
 from .wings import XYZWing, YWing
 from .wwing import WWing
 
@@ -43,4 +43,5 @@ __all__ = [
     "Swordfish",
     "XYZWing",
     "BivalueUniversalGrave",
+    "AvoidableRectangle",
 ]

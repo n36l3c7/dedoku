@@ -37,7 +37,7 @@ class Cell:
     """
 
     __slots__ = ("_row_index", "_column_index", "_value", "_candidates",
-                 "_row", "_column", "_subgrid")
+                 "_row", "_column", "_subgrid", "_is_given")
 
     def __init__(self, row_index: int, column_index: int) -> None:
         if row_index not in range(9) or column_index not in range(9):
@@ -52,6 +52,7 @@ class Cell:
         self._row: Row | None = None
         self._column: Column | None = None
         self._subgrid: Subgrid | None = None
+        self._is_given = False
 
     # ------------------------------------------------------------------
     # Wiring
@@ -150,6 +151,16 @@ class Cell:
         return self._value is not None
 
     @property
+    def is_given(self) -> bool:
+        """bool: Whether the value was part of the original puzzle.
+
+        Uniqueness-based techniques (such as avoidable rectangles) must
+        distinguish clues supplied by the puzzle from values deduced
+        during solving.
+        """
+        return self._is_given
+
+    @property
     def is_bivalue(self) -> bool:
         """bool: Whether the cell is unsolved with exactly two candidates.
 
@@ -220,6 +231,20 @@ class Cell:
         self._candidates.clear()
         for peer in self.peers:
             peer.remove_candidate(digit)
+
+    def mark_as_given(self) -> None:
+        """Flag the cell's value as an original clue of the puzzle.
+
+        This is called by :meth:`sudoku_solver.grid.Grid.from_string`
+        right after each given is placed.
+
+        :raises ValueError: If the cell has no value yet.
+        """
+        if self._value is None:
+            raise ValueError(
+                f"cell {self.label} is unsolved and cannot be a given"
+            )
+        self._is_given = True
 
     def remove_candidate(self, digit: int) -> bool:
         """Eliminate ``digit`` from the cell's candidates.

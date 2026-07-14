@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Sequence
 
 from .techniques import (
+    AvoidableRectangle,
     BivalueUniversalGrave,
     ChuteRemotePairs,
     ClaimingCandidates,
@@ -108,6 +109,7 @@ class SudokuSolver:
             Swordfish(),
             XYZWing(),
             BivalueUniversalGrave(),
+            AvoidableRectangle(),
         )
 
     @property
