@@ -55,6 +55,21 @@ library.
 
 ## Usage
 
+The one-liner:
+
+```python
+import dedoku
+
+result = dedoku.solve("530070000600195000098000060800060003400803001"
+                      "700020006060000280000419005000080079")
+print(result.solved)   # True
+print(result.grid)     # pretty-printed solved board
+for step in result.steps:
+    print(f"[{step.technique}] {step.description}")
+```
+
+Or with full control over the board and the pipeline:
+
 ```python
 from dedoku import Grid, SudokuSolver
 
@@ -128,7 +143,10 @@ restarting from the simplest after every deduction.
 | 20 | AIC (Alternating Inference Chains) | `AIC` | [aic.py](dedoku/techniques/aic.py) |
 
 Uniqueness-based techniques (9, 12, 13, 14) assume the puzzle has exactly one
-solution — the standard convention for published Sudokus.
+solution — the standard convention for published Sudokus. Solving a puzzle
+that might have multiple solutions? Pass ``assume_unique=False`` to
+``dedoku.solve()`` or ``SudokuSolver()`` and they are excluded, keeping every
+deduction sound.
 
 ## Benchmark
 
@@ -200,7 +218,7 @@ python benchmark/make_charts.py        # renders the SVG charts into docs/
 ## Development
 
 ```bash
-python -m unittest discover -s tests -v   # 79 tests, includes the step oracle
+python -m unittest discover -s tests -v   # 86 tests, includes the step oracle
 python -m ruff check dedoku tests benchmark
 python -m mypy dedoku
 python -m coverage run -m unittest discover -s tests && python -m coverage report
@@ -220,6 +238,17 @@ python benchmark/validate.py --count 5000 --seed 7
 
 Latest run: **5,000 generated puzzles, every single deduction verified —
 4,933 solved, 67 stalled (extreme chain territory), 0 unsound steps.**
+
+## Versioning and stability
+
+The project follows [Semantic Versioning](https://semver.org/). The public
+API is everything importable from `dedoku` and `dedoku.techniques` and
+documented in this README; underscore-prefixed names are internal. Until
+1.0.0, breaking changes may still occur in minor releases and are always
+listed in the [changelog](CHANGELOG.md); from 1.0.0 on they will only happen
+in major releases, preceded by a deprecation period. Note that
+`SudokuSolver.solve(grid)` mutates the grid it receives — use
+`dedoku.solve(puzzle)` if you prefer a fresh board per call.
 
 ## License
 
