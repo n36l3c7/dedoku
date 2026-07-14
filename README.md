@@ -50,7 +50,7 @@ Implemented step by step, from simplest to most advanced:
 
 1. [x] **Naked Candidates** (Single, Pair, Triple, Quad)
 2. [x] **Hidden Candidates** (Single, Pair, Triple, Quad)
-3. [ ] **Intersection Removal** (Pointing and Claiming)
+3. [x] **Intersection Removal** (Pointing and Claiming)
 4. [ ] **X-Wing**
 5. [ ] **Chute Remote Pairs**
 6. [ ] **Simple Colouring**

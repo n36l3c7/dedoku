@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Sequence
 
 from .techniques import (
+    ClaimingCandidates,
     HiddenPair,
     HiddenQuad,
     HiddenSingle,
@@ -21,6 +22,7 @@ from .techniques import (
     NakedQuad,
     NakedSingle,
     NakedTriple,
+    PointingCandidates,
     Step,
     Technique,
 )
@@ -86,6 +88,8 @@ class SudokuSolver:
             HiddenTriple(),
             NakedQuad(),
             HiddenQuad(),
+            PointingCandidates(),
+            ClaimingCandidates(),
         )
 
     @property

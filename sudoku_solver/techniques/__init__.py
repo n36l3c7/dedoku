@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from .base import Step, Technique
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
+from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
 
 __all__ = [
@@ -24,4 +25,6 @@ __all__ = [
     "HiddenPair",
     "HiddenTriple",
     "HiddenQuad",
+    "PointingCandidates",
+    "ClaimingCandidates",
 ]
