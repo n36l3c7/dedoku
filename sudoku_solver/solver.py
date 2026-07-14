@@ -23,6 +23,7 @@ from .techniques import (
     HiddenQuad,
     HiddenSingle,
     HiddenTriple,
+    Medusa3D,
     NakedPair,
     NakedQuad,
     NakedSingle,
@@ -120,6 +121,7 @@ class SudokuSolver:
             FinnedSwordfish(),
             XChain(),
             XYChain(),
+            Medusa3D(),
         )
 
     @property

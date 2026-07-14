@@ -17,6 +17,7 @@ from .colouring import SimpleColouring
 from .fish import FinnedSwordfish, FinnedXWing, Swordfish, XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
+from .medusa import Medusa3D
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
 from .rectangles import (
     AvoidableRectangle,
@@ -54,4 +55,5 @@ __all__ = [
     "FinnedSwordfish",
     "XChain",
     "XYChain",
+    "Medusa3D",
 ]
