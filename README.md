@@ -4,7 +4,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/dedoku?logo=python&logoColor=white)](https://pypi.org/project/dedoku/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen)](tests/)
+[![Tests](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml/badge.svg)](https://github.com/n36l3c7/dedoku/actions/workflows/tests.yml)
 [![Backtracking](https://img.shields.io/badge/backtracking-never-red)](#solving-philosophy)
 
 A **pure-Python** Sudoku solving library that relies exclusively on
