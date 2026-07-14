@@ -1,9 +1,13 @@
-"""Wing techniques built on a pivot cell: Y-Wing (XY-Wing).
+"""Wing techniques built on a pivot cell: Y-Wing and XYZ-Wing.
 
 A Y-Wing consists of a bivalue *pivot* ``{x, y}`` seeing two bivalue
 *pincers* ``{x, z}`` and ``{y, z}``. Whatever the pivot holds, one of the
 pincers is forced to ``z``, so ``z`` can be eliminated from every cell
 that sees both pincers.
+
+The XYZ-Wing extends the pattern with a trivalue pivot ``{x, y, z}``: the
+pivot itself may also hold ``z``, so the elimination only applies to cells
+that see all three pattern cells.
 """
 
 from __future__ import annotations
@@ -16,7 +20,7 @@ from .base import Step, Technique
 if TYPE_CHECKING:
     from ..grid import Grid
 
-__all__ = ["YWing"]
+__all__ = ["YWing", "XYZWing"]
 
 
 class YWing(Technique):
@@ -67,6 +71,64 @@ class YWing(Technique):
                             f"{first.label}, {second.label}: one pincer "
                             f"must hold {digit}, so it is removed from "
                             f"every cell seeing both pincers"
+                        ),
+                        eliminations=tuple(eliminations),
+                    )
+        return None
+
+
+class XYZWing(Technique):
+    """Eliminate the digit shared by a trivalue pivot and two pincers."""
+
+    name = "XYZ-Wing"
+
+    def apply(self, grid: Grid) -> Step | None:
+        """Find the first productive XYZ-Wing on the board.
+
+        :param grid: The board to inspect and mutate.
+        :type grid: Grid
+        :returns: The eliminations performed, or ``None`` if no productive
+            pattern exists.
+        :rtype: Step | None
+        """
+        pivots = [
+            cell
+            for cell in grid.cells
+            if not cell.is_solved and len(cell.candidates) == 3
+        ]
+        bivalues = [cell for cell in grid.cells if cell.is_bivalue]
+        for pivot in pivots:
+            pincer_pool = [
+                cell
+                for cell in bivalues
+                if pivot.sees(cell) and cell.candidates < pivot.candidates
+            ]
+            for first, second in combinations(pincer_pool, 2):
+                if first.candidates == second.candidates:
+                    continue
+                shared = first.candidates & second.candidates
+                if len(shared) != 1:
+                    continue
+                digit = next(iter(shared))
+                eliminations: list[tuple[int, int, int]] = []
+                common = (
+                    set(pivot.peers)
+                    & set(first.peers)
+                    & set(second.peers)
+                )
+                for cell in sorted(common, key=lambda c: c.position):
+                    if cell.remove_candidate(digit):
+                        eliminations.append(
+                            (cell.row_index, cell.column_index, digit)
+                        )
+                if eliminations:
+                    return Step(
+                        technique=self.name,
+                        description=(
+                            f"XYZ-Wing with pivot {pivot.label} and "
+                            f"pincers {first.label}, {second.label}: one "
+                            f"of the three must hold {digit}, so it is "
+                            f"removed from every cell seeing all of them"
                         ),
                         eliminations=tuple(eliminations),
                     )

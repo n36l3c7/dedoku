@@ -31,6 +31,7 @@ from .techniques import (
     UniqueRectangle,
     WWing,
     XWing,
+    XYZWing,
     YWing,
 )
 
@@ -104,6 +105,7 @@ class SudokuSolver:
             YWing(),
             UniqueRectangle(),
             Swordfish(),
+            XYZWing(),
         )
 
     @property

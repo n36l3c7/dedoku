@@ -58,7 +58,7 @@ Implemented step by step, from simplest to most advanced:
 8. [x] **Y-Wing** (XY-Wing)
 9. [x] **Rectangle Elimination** (Unique Rectangles)
 10. [x] **Swordfish**
-11. [ ] **XYZ-Wing**
+11. [x] **XYZ-Wing**
 12. [ ] **BUG** (Bivalue Universal Grave)
 13. [ ] **Avoidable Rectangles**
 
