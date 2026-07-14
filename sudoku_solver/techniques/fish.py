@@ -1,4 +1,4 @@
-"""Basic fish techniques, starting with X-Wing (size 2).
+"""Basic fish techniques: X-Wing (size 2) and Swordfish (size 3).
 
 A *basic fish* of size ``n`` for a digit is a set of ``n`` base lines
 (all rows, or all columns) in which the digit's candidate homes fall into
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from ..grid import Grid
     from ..units import Unit
 
-__all__ = ["XWing"]
+__all__ = ["XWing", "Swordfish"]
 
 
 class _BasicFish(Technique):
@@ -120,3 +120,15 @@ class XWing(_BasicFish):
 
     name = "X-Wing"
     size = 2
+
+
+class Swordfish(_BasicFish):
+    """Basic fish of size three.
+
+    Three base lines whose homes for a digit fall into the same three
+    cover lines; the base lines need not hold the digit three times each,
+    two homes per line are enough.
+    """
+
+    name = "Swordfish"
+    size = 3

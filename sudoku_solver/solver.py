@@ -26,6 +26,7 @@ from .techniques import (
     PointingCandidates,
     SimpleColouring,
     Step,
+    Swordfish,
     Technique,
     UniqueRectangle,
     WWing,
@@ -102,6 +103,7 @@ class SudokuSolver:
             WWing(),
             YWing(),
             UniqueRectangle(),
+            Swordfish(),
         )
 
     @property

@@ -12,7 +12,7 @@ from __future__ import annotations
 from .base import Step, Technique
 from .chute import ChuteRemotePairs
 from .colouring import SimpleColouring
-from .fish import XWing
+from .fish import Swordfish, XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
@@ -39,4 +39,5 @@ __all__ = [
     "WWing",
     "YWing",
     "UniqueRectangle",
+    "Swordfish",
 ]
