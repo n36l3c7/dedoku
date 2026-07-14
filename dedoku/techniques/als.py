@@ -23,7 +23,6 @@ from typing import TYPE_CHECKING
 from .base import Step, Technique
 
 if TYPE_CHECKING:
-    from ..cell import Cell
     from ..grid import Grid
 
 __all__ = ["AlsXz"]

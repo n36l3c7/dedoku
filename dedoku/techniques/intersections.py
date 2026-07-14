@@ -19,6 +19,7 @@ from .base import Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
+    from ..units import Unit
 
 __all__ = ["PointingCandidates", "ClaimingCandidates"]
 
@@ -42,6 +43,7 @@ class PointingCandidates(Technique):
                 homes = subgrid.cells_with_candidate(digit)
                 if not 2 <= len(homes) <= 3:
                     continue
+                line: Unit
                 if len({cell.row_index for cell in homes}) == 1:
                     line = homes[0].row
                 elif len({cell.column_index for cell in homes}) == 1:
