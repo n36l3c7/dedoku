@@ -1,7 +1,7 @@
 # Dedoku
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-0.3.0-2a78d6)](https://github.com/n36l3c7/dedoku/releases)
+[![PyPI](https://img.shields.io/pypi/v/dedoku?color=2a78d6)](https://pypi.org/project/dedoku/)
+[![Python versions](https://img.shields.io/pypi/pyversions/dedoku?logo=python&logoColor=white)](https://pypi.org/project/dedoku/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen)](tests/)
@@ -39,12 +39,19 @@ out of 100; everything below that tier is solved outright.
 ## Installation
 
 ```bash
+pip install dedoku
+```
+
+Or from source:
+
+```bash
 git clone https://github.com/n36l3c7/dedoku.git
 cd dedoku
 pip install -e .
 ```
 
-No dependencies are installed — the package is the code you cloned.
+Either way, no dependencies come with it — the package is pure standard
+library.
 
 ## Usage
 
