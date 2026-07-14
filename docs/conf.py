@@ -25,8 +25,12 @@ exclude_patterns = ["_build"]
 
 html_theme = "furo"
 html_title = f"dedoku {__version__}"
+html_static_path = ["_static"]
+html_favicon = "_static/favicon.svg"
 html_theme_options = {
     "source_repository": "https://github.com/n36l3c7/dedoku/",
     "source_branch": "main",
     "source_directory": "docs/",
+    "light_logo": "logo-light.svg",
+    "dark_logo": "logo-dark.svg",
 }

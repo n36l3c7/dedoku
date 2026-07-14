@@ -1,4 +1,11 @@
-# Dedoku
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/_static/banner-dark.svg">
+  <img alt="dedoku — sudoku, solved by pure logic" width="640" src="https://raw.githubusercontent.com/n36l3c7/dedoku/main/docs/_static/banner-light.svg">
+</picture>
+
+</div>
 
 [![PyPI](https://img.shields.io/pypi/v/dedoku?color=2a78d6)](https://pypi.org/project/dedoku/)
 [![Python versions](https://img.shields.io/pypi/pyversions/dedoku?logo=python&logoColor=white)](https://pypi.org/project/dedoku/)

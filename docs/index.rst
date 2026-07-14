@@ -20,9 +20,10 @@ singles to alternating inference chains, and not a single guess.
    for step in result.steps:
        print(f"[{step.technique}] {step.description}")
 
-**No backtracking. No guessing. Ever.** If the pipeline of logical
-techniques cannot finish a puzzle, the solver stops and says so — it never
-falls back to trial and error. Every deduction the library makes has been
+**Logic first. Guessing only if you ask for it.** By default the solver
+never backtracks: if the logical techniques cannot finish a puzzle, it
+stops and says so; explicit ``hybrid`` and ``backtracking`` modes exist for
+when you just need the answer. Every deduction the library makes has been
 machine-verified against an independent brute-force oracle (1.0.0 release
 run: 100,000 puzzles, zero unsound steps).
 
