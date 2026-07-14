@@ -9,6 +9,7 @@ uniqueness arguments, ...) will extend this package.
 
 from __future__ import annotations
 
+from .als import AlsXz
 from .base import Step, Technique
 from .bug import BivalueUniversalGrave
 from .chains import XChain, XYChain
@@ -56,4 +57,5 @@ __all__ = [
     "XChain",
     "XYChain",
     "Medusa3D",
+    "AlsXz",
 ]

@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Sequence
 
 from .techniques import (
+    AlsXz,
     AvoidableRectangle,
     BivalueUniversalGrave,
     FinnedSwordfish,
@@ -122,6 +123,7 @@ class SudokuSolver:
             XChain(),
             XYChain(),
             Medusa3D(),
+            AlsXz(),
         )
 
     @property
