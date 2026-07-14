@@ -16,6 +16,7 @@ from .fish import XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
+from .rectangles import UniqueRectangle
 from .wings import YWing
 from .wwing import WWing
 
@@ -37,4 +38,5 @@ __all__ = [
     "SimpleColouring",
     "WWing",
     "YWing",
+    "UniqueRectangle",
 ]

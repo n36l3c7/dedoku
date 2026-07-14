@@ -56,7 +56,7 @@ Implemented step by step, from simplest to most advanced:
 6. [x] **Simple Colouring**
 7. [x] **W-Wing**
 8. [x] **Y-Wing** (XY-Wing)
-9. [ ] **Rectangle Elimination** (Unique Rectangles)
+9. [x] **Rectangle Elimination** (Unique Rectangles)
 10. [ ] **Swordfish**
 11. [ ] **XYZ-Wing**
 12. [ ] **BUG** (Bivalue Universal Grave)

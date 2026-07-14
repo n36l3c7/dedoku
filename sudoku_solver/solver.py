@@ -27,6 +27,7 @@ from .techniques import (
     SimpleColouring,
     Step,
     Technique,
+    UniqueRectangle,
     WWing,
     XWing,
     YWing,
@@ -100,6 +101,7 @@ class SudokuSolver:
             SimpleColouring(),
             WWing(),
             YWing(),
+            UniqueRectangle(),
         )
 
     @property
