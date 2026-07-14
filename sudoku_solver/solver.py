@@ -15,6 +15,8 @@ from typing import TYPE_CHECKING, Sequence
 from .techniques import (
     AvoidableRectangle,
     BivalueUniversalGrave,
+    FinnedSwordfish,
+    FinnedXWing,
     ChuteRemotePairs,
     ClaimingCandidates,
     HiddenPair,
@@ -112,6 +114,8 @@ class SudokuSolver:
             BivalueUniversalGrave(),
             AvoidableRectangle(),
             UniqueRectangleType2(),
+            FinnedXWing(),
+            FinnedSwordfish(),
         )
 
     @property

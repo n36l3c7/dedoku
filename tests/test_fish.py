@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 
 from sudoku_solver import Grid
-from sudoku_solver.techniques import Swordfish, XWing
+from sudoku_solver.techniques import FinnedSwordfish, FinnedXWing, Swordfish, XWing
 
 
 def _restrict_digit_to_columns(
@@ -87,6 +87,39 @@ class SwordfishTests(unittest.TestCase):
     def test_no_pattern_returns_none(self) -> None:
         """An empty board offers no swordfish."""
         self.assertIsNone(Swordfish().apply(Grid()))
+
+
+class FinnedFishTests(unittest.TestCase):
+    """Fins confine the extra homes; cover-and-box cells are cleared."""
+
+    def test_finned_x_wing(self) -> None:
+        """Rows 1 and 5 on digit 5, columns 1/5, with a fin at R5C6.
+
+        The fin R5C6 shares subgrid 5 with the cover column 5, so 5 is
+        removed only from R4C5 and R6C5 — the cover cells inside the fin
+        subgrid — while cells outside that box keep the digit.
+        """
+        grid = Grid()
+        _restrict_digit_to_columns(grid, 5, 0, (0, 4))
+        _restrict_digit_to_columns(grid, 5, 4, (0, 4, 5))
+        step = FinnedXWing().apply(grid)
+        self.assertIsNotNone(step)
+        self.assertEqual(step.technique, "Finned X-Wing")
+        self.assertEqual(
+            set(step.eliminations), {(3, 4, 5), (5, 4, 5)}
+        )
+        self.assertNotIn(5, grid.cell(3, 4).candidates)
+        self.assertNotIn(5, grid.cell(5, 4).candidates)
+        # Outside the fin subgrid the cover column keeps the digit.
+        self.assertIn(5, grid.cell(2, 4).candidates)
+        self.assertIn(5, grid.cell(7, 4).candidates)
+        # The fin itself is untouched.
+        self.assertIn(5, grid.cell(4, 5).candidates)
+
+    def test_no_pattern_returns_none(self) -> None:
+        """An empty board offers no finned fish."""
+        self.assertIsNone(FinnedXWing().apply(Grid()))
+        self.assertIsNone(FinnedSwordfish().apply(Grid()))
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ from .base import Step, Technique
 from .bug import BivalueUniversalGrave
 from .chute import ChuteRemotePairs
 from .colouring import SimpleColouring
-from .fish import Swordfish, XWing
+from .fish import FinnedSwordfish, FinnedXWing, Swordfish, XWing
 from .hidden import HiddenPair, HiddenQuad, HiddenSingle, HiddenTriple
 from .intersections import ClaimingCandidates, PointingCandidates
 from .naked import NakedPair, NakedQuad, NakedSingle, NakedTriple
@@ -49,4 +49,6 @@ __all__ = [
     "BivalueUniversalGrave",
     "AvoidableRectangle",
     "UniqueRectangleType2",
+    "FinnedXWing",
+    "FinnedSwordfish",
 ]
