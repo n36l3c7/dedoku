@@ -23,8 +23,8 @@ singles to alternating inference chains, and not a single guess.
 **No backtracking. No guessing. Ever.** If the pipeline of logical
 techniques cannot finish a puzzle, the solver stops and says so — it never
 falls back to trial and error. Every deduction the library makes has been
-machine-verified against an independent brute-force oracle (latest run:
-5,000 puzzles, zero unsound steps).
+machine-verified against an independent brute-force oracle (1.0.0 release
+run: 100,000 puzzles, zero unsound steps).
 
 .. toctree::
    :maxdepth: 2

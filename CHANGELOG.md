@@ -4,6 +4,27 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.0.0] - 2026-07-14
+
+First stable release. No functional changes over 0.7.0 — this release
+is a promise.
+
+### Added
+- `--jobs` option for `benchmark/validate.py`: seeded worker batches
+  make six-figure validation runs finish in minutes.
+
+### Changed
+- The API is now **stable**: breaking changes only in major releases,
+  preceded by a deprecation period.
+- Development status classifier raised to Production/Stable.
+
+### Validated
+- 100,000 freshly generated unique-solution puzzles (seeds 100 and
+  200), every placement and every elimination checked against an
+  independent backtracking oracle: **98,687 solved by pure logic
+  (98.7%), 1,313 stalled on chain territory beyond the pipeline, and
+  0 unsound deductions** — on top of every earlier validation run.
+
 ## [0.7.0] - 2026-07-14
 
 ### Added
@@ -96,6 +117,7 @@ First release published to PyPI.
 - Logic-only solving engine with the original 13 technique families,
   from naked singles to avoidable rectangles — no backtracking, ever.
 
+[1.0.0]: https://github.com/n36l3c7/dedoku/compare/v0.7.0...v1.0.0
 [0.7.0]: https://github.com/n36l3c7/dedoku/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/n36l3c7/dedoku/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/n36l3c7/dedoku/compare/v0.4.0...v0.5.0

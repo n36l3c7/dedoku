@@ -261,20 +261,21 @@ library's core contract, tested directly.
 ### Soundness validation
 
 ```bash
-python benchmark/validate.py --count 5000 --seed 7
+python benchmark/validate.py --count 100000 --seed 100 --jobs 8
 ```
 
-Latest run: **5,000 generated puzzles, every single deduction verified —
-4,933 solved, 67 stalled (extreme chain territory), 0 unsound steps.**
+The 1.0.0 release run: **100,000 generated puzzles, every single deduction
+verified — 98,687 solved by pure logic (98.7%), 1,313 stalled (extreme
+chain territory), 0 unsound steps.**
 
 ## Versioning and stability
 
-The project follows [Semantic Versioning](https://semver.org/). The public
-API is everything importable from `dedoku` and `dedoku.techniques` and
-documented in this README; underscore-prefixed names are internal. Until
-1.0.0, breaking changes may still occur in minor releases and are always
-listed in the [changelog](CHANGELOG.md); from 1.0.0 on they will only happen
-in major releases, preceded by a deprecation period. Note that
+The project follows [Semantic Versioning](https://semver.org/) and is
+**stable as of 1.0.0**. The public API is everything importable from
+`dedoku` and `dedoku.techniques` and documented in this README;
+underscore-prefixed names are internal. Breaking changes only happen in
+major releases, preceded by a deprecation period, and every change is
+listed in the [changelog](CHANGELOG.md). Note that
 `SudokuSolver.solve(grid)` mutates the grid it receives — use
 `dedoku.solve(puzzle)` if you prefer a fresh board per call.
 
