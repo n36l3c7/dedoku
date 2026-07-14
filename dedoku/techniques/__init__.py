@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from .aic import AIC
 from .als import AlsXz
-from .base import Step, Technique
+from .base import Elimination, Placement, Step, Technique
 from .bug import BivalueUniversalGrave
 from .chains import XChain, XYChain
 from .chute import ChuteRemotePairs
@@ -30,6 +30,8 @@ from .wings import XYZWing, YWing
 from .wwing import WWing
 
 __all__ = [
+    "Elimination",
+    "Placement",
     "Step",
     "Technique",
     "NakedSingle",

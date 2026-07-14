@@ -32,6 +32,7 @@ class UniqueRectangle(Technique):
     """
 
     name = "Unique Rectangle"
+    requires_unique_solution = True
 
     def apply(self, grid: Grid) -> Step | None:
         """Find the first productive Type 1 unique rectangle.
@@ -100,6 +101,7 @@ class UniqueRectangleType2(Technique):
     """
 
     name = "Unique Rectangle Type 2"
+    requires_unique_solution = True
 
     def apply(self, grid: Grid) -> Step | None:
         """Find the first productive Type 2 unique rectangle.
@@ -174,6 +176,7 @@ class AvoidableRectangle(Technique):
     """
 
     name = "Avoidable Rectangle"
+    requires_unique_solution = True
 
     def apply(self, grid: Grid) -> Step | None:
         """Find the first productive Type 1 avoidable rectangle.

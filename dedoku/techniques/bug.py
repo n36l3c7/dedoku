@@ -28,6 +28,7 @@ class BivalueUniversalGrave(Technique):
     """Resolve a BUG+1 state by solving its only trivalue cell."""
 
     name = "BUG"
+    requires_unique_solution = True
 
     def apply(self, grid: Grid) -> Step | None:
         """Detect a BUG+1 state and place the BUG-breaking digit.

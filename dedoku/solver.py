@@ -59,10 +59,14 @@ class SolveResult:
     :vartype solved: bool
     :ivar steps: Every deduction performed, in order of application.
     :vartype steps: tuple[Step, ...]
+    :ivar grid: The board the session worked on, in its final state —
+        solved, or holding the partial progress when the pipeline stalled.
+    :vartype grid: Grid | None
     """
 
     solved: bool
     steps: tuple[Step, ...] = field(default=())
+    grid: "Grid | None" = field(default=None)
 
     @property
     def techniques_used(self) -> tuple[str, ...]:
@@ -81,23 +85,37 @@ class SudokuSolver:
     :param techniques: Custom technique pipeline, tried in the given order.
         When omitted, :meth:`default_techniques` is used.
     :type techniques: Sequence[Technique] | None
+    :param assume_unique: When ``False``, uniqueness-based techniques
+        (unique rectangles, BUG, avoidable rectangles) are excluded from
+        the default pipeline, so solving stays sound on puzzles that may
+        have multiple solutions. Ignored when ``techniques`` is given.
+    :type assume_unique: bool
     """
 
-    def __init__(self, techniques: Sequence[Technique] | None = None) -> None:
+    def __init__(
+        self,
+        techniques: Sequence[Technique] | None = None,
+        *,
+        assume_unique: bool = True,
+    ) -> None:
         self._techniques: tuple[Technique, ...] = (
             tuple(techniques)
             if techniques is not None
-            else self.default_techniques()
+            else self.default_techniques(assume_unique=assume_unique)
         )
 
     @staticmethod
-    def default_techniques() -> tuple[Technique, ...]:
+    def default_techniques(*, assume_unique: bool = True) -> tuple[Technique, ...]:
         """Build the default pipeline, ordered from simplest to hardest.
 
-        :returns: Fresh instances of every implemented technique.
+        :param assume_unique: When ``False``, techniques flagged with
+            :attr:`~dedoku.techniques.Technique.requires_unique_solution`
+            are left out.
+        :type assume_unique: bool
+        :returns: Fresh instances of the selected techniques.
         :rtype: tuple[Technique, ...]
         """
-        return (
+        pipeline = (
             NakedSingle(),
             HiddenSingle(),
             NakedPair(),
@@ -126,6 +144,12 @@ class SudokuSolver:
             Medusa3D(),
             AlsXz(),
             AIC(),
+        )
+        if assume_unique:
+            return pipeline
+        return tuple(
+            technique for technique in pipeline
+            if not technique.requires_unique_solution
         )
 
     @property
@@ -158,7 +182,9 @@ class SudokuSolver:
                     break
             else:
                 break
-        return SolveResult(solved=grid.is_solved(), steps=tuple(steps))
+        return SolveResult(
+            solved=grid.is_solved(), steps=tuple(steps), grid=grid
+        )
 
     def __repr__(self) -> str:
         """Return a debugging representation of the solver.
