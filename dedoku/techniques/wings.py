@@ -15,7 +15,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -56,12 +56,12 @@ class YWing(Technique):
                 if (first.candidates | second.candidates) - shared \
                         != pivot.candidates:
                     continue
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 common = set(first.peers) & set(second.peers)
                 for cell in sorted(common, key=lambda c: c.position):
                     if cell.remove_candidate(digit):
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     return Step(
@@ -110,7 +110,7 @@ class XYZWing(Technique):
                 if len(shared) != 1:
                     continue
                 digit = next(iter(shared))
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 common = (
                     set(pivot.peers)
                     & set(first.peers)
@@ -119,7 +119,7 @@ class XYZWing(Technique):
                 for cell in sorted(common, key=lambda c: c.position):
                     if cell.remove_candidate(digit):
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     return Step(

@@ -14,7 +14,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -67,11 +67,11 @@ class UniqueRectangle(Technique):
                         continue
                     if not pair & roof.candidates:
                         continue
-                    eliminations: list[tuple[int, int, int]] = []
+                    eliminations: list[Elimination] = []
                     for digit in sorted(pair):
                         if roof.remove_candidate(digit):
                             eliminations.append(
-                                (roof.row_index, roof.column_index, digit)
+                                Elimination(roof.row_index, roof.column_index, digit)
                             )
                     pair_text = ", ".join(str(d) for d in sorted(pair))
                     floor_text = ", ".join(cell.label for cell in floor)
@@ -138,14 +138,14 @@ class UniqueRectangleType2(Technique):
                 if any(not pair < cell.candidates for cell in roof):
                     continue
                 digit = next(iter(extra))
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 common = set(roof[0].peers) & set(roof[1].peers)
                 for cell in sorted(common, key=lambda c: c.position):
                     if cell in corners:
                         continue
                     if cell.remove_candidate(digit):
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     pair_text = ", ".join(str(d) for d in sorted(pair))
@@ -226,7 +226,7 @@ class AvoidableRectangle(Technique):
                         f"two solutions"
                     ),
                     eliminations=(
-                        (target.row_index, target.column_index, digit),
+                        Elimination(target.row_index, target.column_index, digit),
                     ),
                 )
         return None

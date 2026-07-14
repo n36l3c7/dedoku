@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -50,12 +50,12 @@ class PointingCandidates(Technique):
                     line = homes[0].column
                 else:
                     continue
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 for cell in line.cells_with_candidate(digit):
                     if cell.subgrid is not subgrid:
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     return Step(
@@ -93,12 +93,12 @@ class ClaimingCandidates(Technique):
                     continue
                 subgrid = homes[0].subgrid
                 members = set(homes)
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 for cell in subgrid.cells_with_candidate(digit):
                     if cell not in members:
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     return Step(

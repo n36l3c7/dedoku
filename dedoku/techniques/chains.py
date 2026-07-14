@@ -16,7 +16,7 @@ from __future__ import annotations
 from collections import deque
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -151,14 +151,14 @@ class XChain(Technique):
         while cursor is not None:
             chain.add(cursor[0])
             cursor = parent[cursor]
-        eliminations: list[tuple[int, int, int]] = []
+        eliminations: list[Elimination] = []
         common = set(origin.peers) & set(end.peers)
         for cell in sorted(common, key=lambda c: c.position):
             if cell in chain:
                 continue
             if cell.remove_candidate(digit):
                 eliminations.append(
-                    (cell.row_index, cell.column_index, digit)
+                    Elimination(cell.row_index, cell.column_index, digit)
                 )
         if not eliminations:
             return None
@@ -287,14 +287,14 @@ class XYChain(Technique):
             cursor = parent[cursor]
         if len(chain) < 3:
             return None
-        eliminations: list[tuple[int, int, int]] = []
+        eliminations: list[Elimination] = []
         common = set(start.peers) & set(end.peers)
         for cell in sorted(common, key=lambda c: c.position):
             if cell in chain:
                 continue
             if cell.remove_candidate(digit):
                 eliminations.append(
-                    (cell.row_index, cell.column_index, digit)
+                    Elimination(cell.row_index, cell.column_index, digit)
                 )
         if not eliminations:
             return None

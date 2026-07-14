@@ -20,7 +20,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -120,14 +120,14 @@ class AlsXz(Technique):
                 z_cells = [
                     cell for cell in members if z in cell.candidates
                 ]
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 for cell in grid.cells:
                     if cell in members or z not in cell.candidates:
                         continue
                     if all(cell.sees(other) for other in z_cells):
                         cell.remove_candidate(z)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, z)
+                            Elimination(cell.row_index, cell.column_index, z)
                         )
                 if eliminations:
                     label = lambda cells: ", ".join(  # noqa: E731

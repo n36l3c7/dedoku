@@ -15,7 +15,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -58,12 +58,12 @@ class WWing(Technique):
                         or (left.sees(second) and right.sees(first))
                     ):
                         continue
-                    eliminations: list[tuple[int, int, int]] = []
+                    eliminations: list[Elimination] = []
                     common = set(first.peers) & set(second.peers)
                     for cell in sorted(common, key=lambda c: c.position):
                         if cell.remove_candidate(elim_digit):
                             eliminations.append(
-                                (cell.row_index, cell.column_index, elim_digit)
+                                Elimination(cell.row_index, cell.column_index, elim_digit)
                             )
                     if eliminations:
                         pair_text = ", ".join(str(d) for d in pair)

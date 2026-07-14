@@ -20,7 +20,7 @@ from __future__ import annotations
 from collections import deque
 from typing import TYPE_CHECKING, Iterator
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -189,7 +189,7 @@ class AIC(Technique):
         while cursor is not None:
             chain.add(cursor[0])
             cursor = parent[cursor]
-        eliminations: list[tuple[int, int, int]] = []
+        eliminations: list[Elimination] = []
         for cell in grid.cells:
             for digit in sorted(cell.candidates):
                 node = (cell, digit)
@@ -199,7 +199,7 @@ class AIC(Technique):
                         self._weakly_linked(node, end):
                     cell.remove_candidate(digit)
                     eliminations.append(
-                        (cell.row_index, cell.column_index, digit)
+                        Elimination(cell.row_index, cell.column_index, digit)
                     )
         if not eliminations:
             return None

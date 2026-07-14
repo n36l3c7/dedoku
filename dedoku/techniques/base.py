@@ -10,35 +10,88 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
     from ..grid import Grid
 
-__all__ = ["Step", "Technique"]
+__all__ = ["Placement", "Elimination", "Step", "Technique"]
+
+
+class Placement(NamedTuple):
+    """A digit placed at a board position.
+
+    Behaves exactly like the plain ``(row, column, digit)`` tuple it
+    replaces — unpacking, indexing, and equality with bare tuples all
+    keep working — while adding named field access.
+
+    :ivar row: Zero-based row index (0-8).
+    :vartype row: int
+    :ivar column: Zero-based column index (0-8).
+    :vartype column: int
+    :ivar digit: The digit placed, between 1 and 9.
+    :vartype digit: int
+    """
+
+    row: int
+    column: int
+    digit: int
+
+
+class Elimination(NamedTuple):
+    """A candidate removed from a board position.
+
+    Behaves exactly like the plain ``(row, column, digit)`` tuple it
+    replaces — unpacking, indexing, and equality with bare tuples all
+    keep working — while adding named field access.
+
+    :ivar row: Zero-based row index (0-8).
+    :vartype row: int
+    :ivar column: Zero-based column index (0-8).
+    :vartype column: int
+    :ivar digit: The candidate removed, between 1 and 9.
+    :vartype digit: int
+    """
+
+    row: int
+    column: int
+    digit: int
 
 
 @dataclass(frozen=True)
 class Step:
     """Immutable record of one successful technique application.
 
-    Coordinates are zero-based ``(row_index, column_index, digit)`` triples;
-    the human-readable :attr:`description` uses one-based ``RxCy`` labels.
+    Coordinates are zero-based; the human-readable :attr:`description`
+    uses one-based ``RxCy`` labels. Any bare ``(row, column, digit)``
+    tuples passed to the constructor are normalised to
+    :class:`Placement` / :class:`Elimination` instances.
 
     :ivar technique: Name of the technique that produced the step.
     :vartype technique: str
     :ivar description: Human-readable explanation of the deduction.
     :vartype description: str
     :ivar placements: Values placed on the board by this step.
-    :vartype placements: tuple[tuple[int, int, int], ...]
+    :vartype placements: tuple[Placement, ...]
     :ivar eliminations: Candidates removed from cells by this step.
-    :vartype eliminations: tuple[tuple[int, int, int], ...]
+    :vartype eliminations: tuple[Elimination, ...]
     """
 
     technique: str
     description: str
-    placements: tuple[tuple[int, int, int], ...] = field(default=())
-    eliminations: tuple[tuple[int, int, int], ...] = field(default=())
+    placements: tuple[Placement, ...] = field(default=())
+    eliminations: tuple[Elimination, ...] = field(default=())
+
+    def __post_init__(self) -> None:
+        """Normalise bare coordinate tuples to their named types."""
+        object.__setattr__(
+            self, "placements",
+            tuple(Placement(*entry) for entry in self.placements),
+        )
+        object.__setattr__(
+            self, "eliminations",
+            tuple(Elimination(*entry) for entry in self.eliminations),
+        )
 
 
 class Technique(ABC):
@@ -48,9 +101,14 @@ class Technique(ABC):
     grid, so the same instance can be reused across puzzles.
 
     :cvar name: Human-readable technique name shown in solving reports.
+    :cvar requires_unique_solution: ``True`` for uniqueness-based
+        techniques, whose deductions are only sound when the puzzle has
+        exactly one solution. The default pipeline can exclude them via
+        ``SudokuSolver(assume_unique=False)``.
     """
 
     name: str = "technique"
+    requires_unique_solution: bool = False
 
     @abstractmethod
     def apply(self, grid: Grid) -> Step | None:

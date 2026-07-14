@@ -17,7 +17,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -90,14 +90,14 @@ class _BasicFish(Technique):
             if len(covers) != self.size:
                 continue
             base_indices = {line.index for line, _ in chosen}
-            eliminations: list[tuple[int, int, int]] = []
+            eliminations: list[Elimination] = []
             for cover in sorted(covers):
                 for cell in cover_lines[cover].cells_with_candidate(digit):
                     base = cell.row_index if base_is_row else cell.column_index
                     if base not in base_indices:
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
             if eliminations:
                 base_kind = "rows" if base_is_row else "columns"
@@ -212,7 +212,7 @@ class _FinnedFish(Technique):
                 if len({cell.subgrid.index for cell in fins}) != 1:
                     continue
                 fin_box = fins[0].subgrid
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 for cover in covers:
                     for cell in cover_lines[cover].cells_with_candidate(digit):
                         if base_index(cell) in base_indices:
@@ -221,7 +221,7 @@ class _FinnedFish(Technique):
                             continue
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     base_kind = "rows" if base_is_row else "columns"

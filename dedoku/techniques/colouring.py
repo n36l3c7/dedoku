@@ -20,7 +20,7 @@ from itertools import combinations
 from typing import TYPE_CHECKING
 
 from ..exceptions import ContradictionError
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -139,11 +139,11 @@ class SimpleColouring(Technique):
             )
             if witness is None:
                 continue
-            eliminations: list[tuple[int, int, int]] = []
+            eliminations: list[Elimination] = []
             for cell in group:
                 if cell.remove_candidate(digit):
                     eliminations.append(
-                        (cell.row_index, cell.column_index, digit)
+                        Elimination(cell.row_index, cell.column_index, digit)
                     )
             return Step(
                 technique=self.name,
@@ -172,7 +172,7 @@ class SimpleColouring(Technique):
         """
         group_zero = [cell for cell, colour in colours.items() if colour == 0]
         group_one = [cell for cell, colour in colours.items() if colour == 1]
-        eliminations: list[tuple[int, int, int]] = []
+        eliminations: list[Elimination] = []
         trapped_labels: list[str] = []
         for cell in grid.cells:
             if cell in colours or digit not in cell.candidates:
@@ -182,7 +182,7 @@ class SimpleColouring(Technique):
             ):
                 cell.remove_candidate(digit)
                 eliminations.append(
-                    (cell.row_index, cell.column_index, digit)
+                    Elimination(cell.row_index, cell.column_index, digit)
                 )
                 trapped_labels.append(cell.label)
         if not eliminations:

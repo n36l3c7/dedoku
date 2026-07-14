@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Placement, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -67,7 +67,7 @@ class BivalueUniversalGrave(Technique):
                         f"to avoid a deadly bivalue universal grave"
                     ),
                     placements=(
-                        (trivalue.row_index, trivalue.column_index, digit),
+                        Placement(trivalue.row_index, trivalue.column_index, digit),
                     ),
                 )
         return None

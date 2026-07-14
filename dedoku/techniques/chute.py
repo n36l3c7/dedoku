@@ -19,7 +19,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -95,12 +95,12 @@ class ChuteRemotePairs(Technique):
                     for cell in blind
                 ):
                     continue
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 common = set(first.peers) & set(second.peers)
                 for cell in sorted(common, key=lambda c: c.position):
                     if cell.remove_candidate(present):
                         eliminations.append(
-                            (cell.row_index, cell.column_index, present)
+                            Elimination(cell.row_index, cell.column_index, present)
                         )
                 if eliminations:
                     pair_text = ", ".join(str(d) for d in pair)

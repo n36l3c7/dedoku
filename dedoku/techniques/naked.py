@@ -11,7 +11,7 @@ from __future__ import annotations
 from itertools import combinations
 from typing import TYPE_CHECKING
 
-from .base import Step, Technique
+from .base import Elimination, Placement, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -41,7 +41,7 @@ class NakedSingle(Technique):
             return Step(
                 technique=self.name,
                 description=f"{cell.label} has {digit} as its only candidate",
-                placements=((cell.row_index, cell.column_index, digit),),
+                placements=(Placement(cell.row_index, cell.column_index, digit),),
             )
         return None
 
@@ -79,7 +79,7 @@ class _NakedSubset(Technique):
                 )
                 if len(digits) != self.size:
                     continue
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 members = set(combo)
                 for cell in unsolved:
                     if cell in members:
@@ -87,7 +87,7 @@ class _NakedSubset(Technique):
                     for digit in sorted(digits & cell.candidates):
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     digit_text = ", ".join(str(d) for d in sorted(digits))

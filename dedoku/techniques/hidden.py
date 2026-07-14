@@ -12,7 +12,7 @@ from itertools import combinations
 from typing import TYPE_CHECKING
 
 from ..exceptions import ContradictionError
-from .base import Step, Technique
+from .base import Elimination, Placement, Step, Technique
 
 if TYPE_CHECKING:
     from ..grid import Grid
@@ -53,7 +53,7 @@ class HiddenSingle(Technique):
                             f"in {cell.label}"
                         ),
                         placements=(
-                            (cell.row_index, cell.column_index, digit),
+                            Placement(cell.row_index, cell.column_index, digit),
                         ),
                     )
         return None
@@ -96,12 +96,12 @@ class _HiddenSubset(Technique):
                     for digit in digit_set
                 ):
                     continue
-                eliminations: list[tuple[int, int, int]] = []
+                eliminations: list[Elimination] = []
                 for cell in homes:
                     for digit in sorted(cell.candidates - digit_set):
                         cell.remove_candidate(digit)
                         eliminations.append(
-                            (cell.row_index, cell.column_index, digit)
+                            Elimination(cell.row_index, cell.column_index, digit)
                         )
                 if eliminations:
                     digit_text = ", ".join(str(d) for d in sorted(digit_set))

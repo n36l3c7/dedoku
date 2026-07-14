@@ -24,7 +24,7 @@ from itertools import combinations
 from typing import TYPE_CHECKING
 
 from ..exceptions import ContradictionError
-from .base import Step, Technique
+from .base import Elimination, Step, Technique
 
 if TYPE_CHECKING:
     from ..cell import Cell
@@ -154,7 +154,7 @@ class Medusa3D(Technique):
             for cell, digit in group:
                 if cell.remove_candidate(digit):
                     eliminations.append(
-                        (cell.row_index, cell.column_index, digit)
+                        Elimination(cell.row_index, cell.column_index, digit)
                     )
             return Step(
                 technique=self.name,
@@ -198,7 +198,7 @@ class Medusa3D(Technique):
                 if len(seen_colours) == 2:
                     cell.remove_candidate(digit)
                     eliminations.append(
-                        (cell.row_index, cell.column_index, digit)
+                        Elimination(cell.row_index, cell.column_index, digit)
                     )
         if not eliminations:
             return None
