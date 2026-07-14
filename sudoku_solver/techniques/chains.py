@@ -7,8 +7,8 @@ least one of its two endpoints is true, so anything weakly linked to both
 endpoints can be eliminated.
 
 This module hosts the single-digit variant (:class:`XChain`, the core of
-X-Cycles). Chains are found breadth-first, so the shortest productive
-chain is reported.
+X-Cycles) and the bivalue-cell variant (:class:`XYChain`). Chains are
+found breadth-first, so the shortest productive chain is reported.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from ..cell import Cell
     from ..grid import Grid
 
-__all__ = ["XChain"]
+__all__ = ["XChain", "XYChain"]
 
 _MAX_LINKS = 12
 """int: Search depth cap; chains longer than this are never useful in
@@ -168,6 +168,142 @@ class XChain(Technique):
                 f"X-Chain on digit {digit} from {origin.label} to "
                 f"{end.label} ({state[1]} links): one endpoint holds the "
                 f"digit, so it is removed from every cell seeing both"
+            ),
+            eliminations=tuple(eliminations),
+        )
+
+
+class XYChain(Technique):
+    """Chain of bivalue cells whose endpoints pin a shared digit.
+
+    Consecutive cells see each other and hand over one candidate: a cell
+    entered on digit ``p`` exits on its other candidate. A chain that
+    starts by *leaving* digit ``z`` behind and ends by *producing* ``z``
+    proves that one of its endpoints holds ``z``, so ``z`` is eliminated
+    from every outside cell seeing both endpoints. Within a single house
+    the two-cell case degenerates to a naked pair, so only chains of
+    three or more cells are reported.
+    """
+
+    name = "XY-Chain"
+
+    def apply(self, grid: Grid) -> Step | None:
+        """Find the shortest productive XY-Chain on the board.
+
+        :param grid: The board to inspect and mutate.
+        :type grid: Grid
+        :returns: The eliminations performed, or ``None`` if no productive
+            chain exists.
+        :rtype: Step | None
+        """
+        bivalues = [cell for cell in grid.cells if cell.is_bivalue]
+        if len(bivalues) < 3:
+            return None
+        neighbours = {
+            cell: [other for other in bivalues if cell.sees(other)]
+            for cell in bivalues
+        }
+        for digit in range(1, 10):
+            for start in bivalues:
+                if digit not in start.candidates:
+                    continue
+                step = self._search(digit, start, neighbours)
+                if step is not None:
+                    return step
+        return None
+
+    def _search(
+        self,
+        digit: int,
+        start: Cell,
+        neighbours: dict[Cell, list[Cell]],
+    ) -> Step | None:
+        """Breadth-first search of XY-Chains from ``start`` pinning ``digit``.
+
+        States are ``(cell, carry)`` pairs, where ``carry`` is the
+        candidate the chain hands to the next cell.
+
+        :param digit: The digit both endpoints must pin.
+        :type digit: int
+        :param start: The chain's first cell, containing ``digit``.
+        :type start: Cell
+        :param neighbours: Mutual-visibility adjacency between bivalue
+            cells.
+        :type neighbours: dict[Cell, list[Cell]]
+        :returns: The eliminations performed, or ``None``.
+        :rtype: Step | None
+        """
+        carry = next(iter(start.candidates - {digit}))
+        first = (start, carry)
+        parent: dict[tuple[Cell, int], tuple[Cell, int] | None] = {
+            first: None
+        }
+        queue: deque[tuple[Cell, int]] = deque([first])
+        while queue:
+            cell, pending = queue.popleft()
+            for nxt in neighbours[cell]:
+                if pending not in nxt.candidates:
+                    continue
+                nxt_carry = next(iter(nxt.candidates - {pending}))
+                state = (nxt, nxt_carry)
+                if state in parent:
+                    continue
+                parent[state] = (cell, pending)
+                if nxt_carry == digit and nxt is not start:
+                    step = self._eliminate(digit, start, nxt, parent, state)
+                    if step is not None:
+                        return step
+                queue.append(state)
+        return None
+
+    def _eliminate(
+        self,
+        digit: int,
+        start: Cell,
+        end: Cell,
+        parent: dict,
+        state: tuple[Cell, int],
+    ) -> Step | None:
+        """Apply the endpoint rule for one bivalue chain.
+
+        :param digit: The digit both endpoints pin.
+        :type digit: int
+        :param start: One chain endpoint.
+        :type start: Cell
+        :param end: The other chain endpoint.
+        :type end: Cell
+        :param parent: BFS parent pointers used to rebuild the chain.
+        :type parent: dict
+        :param state: The end state to walk back from.
+        :type state: tuple[Cell, int]
+        :returns: The eliminations performed, or ``None`` if the chain
+            removes nothing.
+        :rtype: Step | None
+        """
+        chain: set[Cell] = set()
+        cursor: tuple[Cell, int] | None = state
+        while cursor is not None:
+            chain.add(cursor[0])
+            cursor = parent[cursor]
+        if len(chain) < 3:
+            return None
+        eliminations: list[tuple[int, int, int]] = []
+        common = set(start.peers) & set(end.peers)
+        for cell in sorted(common, key=lambda c: c.position):
+            if cell in chain:
+                continue
+            if cell.remove_candidate(digit):
+                eliminations.append(
+                    (cell.row_index, cell.column_index, digit)
+                )
+        if not eliminations:
+            return None
+        return Step(
+            technique=self.name,
+            description=(
+                f"XY-Chain of {len(chain)} cells from {start.label} to "
+                f"{end.label}: one endpoint holds {digit}, so it is "
+                f"removed from every cell seeing both"
             ),
             eliminations=tuple(eliminations),
         )

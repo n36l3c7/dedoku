@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 
 from sudoku_solver import Grid
-from sudoku_solver.techniques import XChain
+from sudoku_solver.techniques import XChain, XYChain
 
 
 def _restrict_digit_to_rows(
@@ -53,6 +53,38 @@ class XChainTests(unittest.TestCase):
     def test_no_pattern_returns_none(self) -> None:
         """An empty board has no conjugate links, hence no chains."""
         self.assertIsNone(XChain().apply(Grid()))
+
+
+class XYChainTests(unittest.TestCase):
+    """Bivalue chains eliminate the digit pinned by both endpoints."""
+
+    def test_three_cell_chain(self) -> None:
+        """R1C5 {1,3} - R1C1 {1,2} - R5C1 {2,3} pins digit 3.
+
+        Whichever way the chain resolves, R1C5 or R5C1 holds 3, so the
+        only outside cell seeing both — R5C5 — loses it.
+        """
+        grid = Grid()
+        for digit in range(1, 10):
+            if digit not in (1, 2):
+                grid.cell(0, 0).remove_candidate(digit)
+            if digit not in (1, 3):
+                grid.cell(0, 4).remove_candidate(digit)
+            if digit not in (2, 3):
+                grid.cell(4, 0).remove_candidate(digit)
+        step = XYChain().apply(grid)
+        self.assertIsNotNone(step)
+        self.assertEqual(step.technique, "XY-Chain")
+        self.assertEqual(step.eliminations, ((4, 4, 3),))
+        self.assertNotIn(3, grid.cell(4, 4).candidates)
+        # Chain cells are untouched.
+        self.assertEqual(grid.cell(0, 0).candidates, frozenset({1, 2}))
+        self.assertEqual(grid.cell(0, 4).candidates, frozenset({1, 3}))
+        self.assertEqual(grid.cell(4, 0).candidates, frozenset({2, 3}))
+
+    def test_no_pattern_returns_none(self) -> None:
+        """An empty board has no bivalue cells, hence no chains."""
+        self.assertIsNone(XYChain().apply(Grid()))
 
 
 if __name__ == "__main__":

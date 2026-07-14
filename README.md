@@ -68,7 +68,7 @@ first 13 techniques stall on the hardest puzzles:
 14. [x] **Unique Rectangles Type 2**
 15. [x] **Finned X-Wing** and **Finned Swordfish**
 16. [x] **X-Chain** (basic X-Cycles)
-17. [ ] **XY-Chain**
+17. [x] **XY-Chain**
 18. [ ] **3D Medusa**
 19. [ ] **ALS-XZ** (Almost Locked Sets)
 20. [ ] **AIC** (Alternating Inference Chains)

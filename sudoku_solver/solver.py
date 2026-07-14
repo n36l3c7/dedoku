@@ -37,6 +37,7 @@ from .techniques import (
     WWing,
     XChain,
     XWing,
+    XYChain,
     XYZWing,
     YWing,
 )
@@ -118,6 +119,7 @@ class SudokuSolver:
             FinnedXWing(),
             FinnedSwordfish(),
             XChain(),
+            XYChain(),
         )
 
     @property
