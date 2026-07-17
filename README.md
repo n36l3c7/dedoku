@@ -202,12 +202,12 @@ Windows 11. Levels are graded by the hardest technique the original
 
 | Level | Solved by library | BT median | BT p95 | BT max | Library median | Library p95 | Library max |
 |---|---|---|---|---|---|---|---|
-| 1 · Singles | 100/100 | 15.9 ms | 481 ms | 1,757 ms | **1.1 ms** | 1.6 ms | 1.8 ms |
-| 2 · Subsets | 100/100 | 13.1 ms | 218 ms | 2,172 ms | **1.6 ms** | 2.4 ms | 2.9 ms |
-| 3 · Intersections | 100/100 | 5.0 ms | 126 ms | 2,026 ms | **3.1 ms** | 7.8 ms | 12.1 ms |
-| 4 · Advanced | 100/100 | 15.6 ms | 225 ms | 551 ms | **7.5 ms** | 17.7 ms | 31.2 ms |
-| 5 · Extreme | 89/100 † | **16.7 ms** | 229 ms | 684 ms | 65.4 ms | 306 ms | 720 ms |
-| **Overall** | **489/500** | 12.6 ms | 279 ms | 2,172 ms | **3.0 ms** | 158 ms | 720 ms |
+| 1 · Singles | 100/100 | 18.3 ms | 526 ms | 1,913 ms | **1.3 ms** | 2.1 ms | 2.7 ms |
+| 2 · Subsets | 100/100 | 14.0 ms | 218 ms | 2,314 ms | **1.6 ms** | 2.6 ms | 2.8 ms |
+| 3 · Intersections | 100/100 | 5.4 ms | 134 ms | 2,165 ms | **3.4 ms** | 8.8 ms | 12.9 ms |
+| 4 · Advanced | 100/100 | 11.2 ms | 144 ms | 353 ms | **5.0 ms** | 12.1 ms | 23.2 ms |
+| 5 · Extreme | 89/100 † | **17.0 ms** | 241 ms | 721 ms | 60.1 ms | 215 ms | 495 ms |
+| **Overall** | **489/500** | 12.0 ms | 239 ms | 2,314 ms | **2.8 ms** | 104 ms | 495 ms |
 
 † On the 11 extreme puzzles the library cannot crack, its reported time is
 the time to exhaust every technique and stop — never a guess.
@@ -215,9 +215,9 @@ the time to exhaust every technique and stop — never a guess.
 Key findings:
 
 - **The logic library wins on the median at every human-graded level up to
-  Advanced** (3.0 ms vs 12.6 ms overall) and is far more predictable: naive
-  backtracking's worst case is 2.2 s when the cell order is unlucky, versus
-  0.72 s for the library's hardest chain solve.
+  Advanced** (2.8 ms vs 12.0 ms overall) and is far more predictable: naive
+  backtracking's worst case is 2.3 s when the cell order is unlucky, versus
+  0.50 s for the library's hardest chain solve.
 - **Brute-force time is uncorrelated with human difficulty** — backtracking
   is fastest on level 3 and slowest on level 1, while the library's times
   grow monotonically with the level. The two solvers measure different
