@@ -4,6 +4,32 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-07-18
+
+Performance release: same deductions, found faster. A full step-by-step
+digest over the 500-puzzle benchmark confirms the optimised pipeline
+produces byte-for-byte identical solving paths.
+
+### Changed
+- Fish searches precompute their cover indices per base line, ALS-XZ
+  eliminations intersect cached peer sets, AIC endpoint eliminations
+  reuse a precomputed weak-link set, and `Cell.sees` compares positions
+  arithmetically. Together: whole-benchmark solving is about 25% faster,
+  and the extreme tier about 2x.
+- `Cell.sees` no longer requires the cells to be attached to a grid —
+  visibility is purely positional.
+- Benchmark timings in the README and docs refreshed on the optimised
+  code; three medians in the previous table were off by 0.1 ms from the
+  recorded data and have been corrected along the way.
+
+### Fixed
+- The Documentation link in the PyPI metadata pointed at the lowercase
+  Pages URL, which 404s since the repository was renamed to `Dedoku`;
+  publishing this release refreshes it (fixed in-repo right after
+  1.0.0).
+- The docs benchmark page still described the 0.4.0-era validation run
+  (5,000 puzzles); it now records the 100,000-puzzle 1.0.0 release run.
+
 ## [1.0.0] - 2026-07-14
 
 First stable release. No functional changes over 0.7.0 — this release
@@ -117,6 +143,7 @@ First release published to PyPI.
 - Logic-only solving engine with the original 13 technique families,
   from naked singles to avoidable rectangles — no backtracking, ever.
 
+[1.1.0]: https://github.com/n36l3c7/Dedoku/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/n36l3c7/Dedoku/compare/v0.7.0...v1.0.0
 [0.7.0]: https://github.com/n36l3c7/Dedoku/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/n36l3c7/Dedoku/compare/v0.5.0...v0.6.0
