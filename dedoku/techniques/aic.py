@@ -54,7 +54,7 @@ class AIC(Technique):
                 origin = (cell, digit)
                 if origin not in strong:
                     continue
-                step = self._search(grid, origin, strong)
+                step = self._search(origin, strong)
                 if step is not None:
                     return step
         return None
@@ -120,14 +120,11 @@ class AIC(Technique):
 
     def _search(
         self,
-        grid: Grid,
         origin: _Node,
         strong: dict[_Node, list[_Node]],
     ) -> Step | None:
         """Breadth-first search of alternating chains from ``origin``.
 
-        :param grid: The board to inspect and mutate.
-        :type grid: Grid
         :param origin: The chain's first candidate node.
         :type origin: tuple[Cell, int]
         :param strong: The strong-link adjacency.
@@ -135,6 +132,9 @@ class AIC(Technique):
         :returns: The eliminations performed, or ``None``.
         :rtype: Step | None
         """
+        origin_weak = frozenset(self._weak_neighbours(origin))
+        if not origin_weak:
+            return None
         first = (origin, 0)
         parent: dict[tuple[_Node, int], tuple[_Node, int] | None] = {
             first: None
@@ -154,7 +154,9 @@ class AIC(Technique):
                     continue
                 parent[state] = (node, links)
                 if (links + 1) % 2 == 1 and links + 1 >= 3:
-                    step = self._eliminate(grid, origin, nxt, parent, state)
+                    step = self._eliminate(
+                        origin, origin_weak, nxt, parent, state
+                    )
                     if step is not None:
                         return step
                 queue.append(state)
@@ -162,18 +164,19 @@ class AIC(Technique):
 
     def _eliminate(
         self,
-        grid: Grid,
         origin: _Node,
+        origin_weak: frozenset[_Node],
         end: _Node,
         parent: dict,
         state: tuple[_Node, int],
     ) -> Step | None:
         """Apply the endpoint rule for one chain.
 
-        :param grid: The board to inspect and mutate.
-        :type grid: Grid
         :param origin: One chain endpoint.
         :type origin: tuple[Cell, int]
+        :param origin_weak: Every candidate weakly linked to ``origin``,
+            precomputed once per chain search.
+        :type origin_weak: frozenset[tuple[Cell, int]]
         :param end: The other chain endpoint.
         :type end: tuple[Cell, int]
         :param parent: BFS parent pointers used to rebuild the chain.
@@ -184,23 +187,24 @@ class AIC(Technique):
             removes nothing.
         :rtype: Step | None
         """
+        targets = origin_weak.intersection(self._weak_neighbours(end))
+        if not targets:
+            return None
         chain: set[_Node] = set()
         cursor: tuple[_Node, int] | None = state
         while cursor is not None:
             chain.add(cursor[0])
             cursor = parent[cursor]
         eliminations: list[Elimination] = []
-        for cell in grid.cells:
-            for digit in sorted(cell.candidates):
-                node = (cell, digit)
-                if node in chain:
-                    continue
-                if self._weakly_linked(node, origin) and \
-                        self._weakly_linked(node, end):
-                    cell.remove_candidate(digit)
-                    eliminations.append(
-                        Elimination(cell.row_index, cell.column_index, digit)
-                    )
+        for cell, digit in sorted(
+            targets, key=lambda node: (node[0].position, node[1])
+        ):
+            if (cell, digit) in chain:
+                continue
+            cell.remove_candidate(digit)
+            eliminations.append(
+                Elimination(cell.row_index, cell.column_index, digit)
+            )
         if not eliminations:
             return None
         return Step(

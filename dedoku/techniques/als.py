@@ -120,15 +120,20 @@ class AlsXz(Technique):
                 z_cells = [
                     cell for cell in members if z in cell.candidates
                 ]
+                # Cells seeing every z-cell are exactly the common peers.
+                witnesses = set(z_cells[0].peers)
+                for z_cell in z_cells[1:]:
+                    witnesses.intersection_update(z_cell.peers)
                 eliminations: list[Elimination] = []
-                for cell in grid.cells:
+                for cell in sorted(
+                    witnesses, key=lambda c: c.position
+                ):
                     if cell in members or z not in cell.candidates:
                         continue
-                    if all(cell.sees(other) for other in z_cells):
-                        cell.remove_candidate(z)
-                        eliminations.append(
-                            Elimination(cell.row_index, cell.column_index, z)
-                        )
+                    cell.remove_candidate(z)
+                    eliminations.append(
+                        Elimination(cell.row_index, cell.column_index, z)
+                    )
                 if eliminations:
                     label = lambda cells: ", ".join(  # noqa: E731
                         cell.label

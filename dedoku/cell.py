@@ -198,7 +198,8 @@ class Cell:
     def sees(self, other: Cell) -> bool:
         """Report whether ``other`` shares a house with this cell.
 
-        A cell never sees itself.
+        A cell never sees itself. Visibility is purely positional, so
+        this works whether or not the cells are attached to a grid.
 
         :param other: The cell to test against.
         :type other: Cell
@@ -206,10 +207,13 @@ class Cell:
             subgrid.
         :rtype: bool
         """
-        return other is not self and (
-            self._row_index == other.row_index
-            or self._column_index == other.column_index
-            or self.subgrid.index == other.subgrid.index
+        if other is self:
+            return False
+        return (
+            self._row_index == other._row_index
+            or self._column_index == other._column_index
+            or (self._row_index // 3 == other._row_index // 3
+                and self._column_index // 3 == other._column_index // 3)
         )
 
     # ------------------------------------------------------------------

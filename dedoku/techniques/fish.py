@@ -78,15 +78,21 @@ class _BasicFish(Technique):
         def cover_index(cell: Cell) -> int:
             return cell.column_index if base_is_row else cell.row_index
 
-        candidates: list[tuple[Unit, tuple[Cell, ...]]] = []
+        # Cover indices are computed once per base line, not once per
+        # combination of base lines.
+        candidates: list[tuple[Unit, frozenset[int]]] = []
         for line in base_lines:
             homes = line.cells_with_candidate(digit)
             if 2 <= len(homes) <= self.size:
-                candidates.append((line, homes))
+                candidates.append(
+                    (line, frozenset(cover_index(cell) for cell in homes))
+                )
         for chosen in combinations(candidates, self.size):
             covers: set[int] = set()
-            for _, homes in chosen:
-                covers.update(cover_index(cell) for cell in homes)
+            for _, line_covers in chosen:
+                covers |= line_covers
+                if len(covers) > self.size:
+                    break
             if len(covers) != self.size:
                 continue
             base_indices = {line.index for line, _ in chosen}
@@ -192,22 +198,26 @@ class _FinnedFish(Technique):
         def base_index(cell: Cell) -> int:
             return cell.row_index if base_is_row else cell.column_index
 
-        candidates: list[tuple[Unit, tuple[Cell, ...]]] = []
+        # Cover indices are computed once per base line, not once per
+        # combination of base lines and cover lines.
+        candidates: list[tuple[Unit, tuple[tuple[Cell, int], ...]]] = []
         for line in base_lines:
             homes = line.cells_with_candidate(digit)
             if 2 <= len(homes) <= self.size + 2:
-                candidates.append((line, homes))
+                candidates.append(
+                    (line, tuple((cell, cover_index(cell)) for cell in homes))
+                )
         for chosen in combinations(candidates, self.size):
-            all_homes = [cell for _, homes in chosen for cell in homes]
-            cover_values = sorted({cover_index(cell) for cell in all_homes})
+            all_homes = [pair for _, pairs in chosen for pair in pairs]
+            cover_values = sorted({cover for _, cover in all_homes})
             if len(cover_values) <= self.size:
                 continue  # a plain fish; the basic technique handles it
             base_indices = {line.index for line, _ in chosen}
             for covers in combinations(cover_values, self.size):
                 cover_set = set(covers)
                 fins = [
-                    cell for cell in all_homes
-                    if cover_index(cell) not in cover_set
+                    cell for cell, cover in all_homes
+                    if cover not in cover_set
                 ]
                 if len({cell.subgrid.index for cell in fins}) != 1:
                     continue

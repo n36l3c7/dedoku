@@ -143,7 +143,7 @@ class Unit:
         :rtype: tuple[Cell, ...]
         """
         return tuple(
-            cell for cell in self._cells if digit in cell.candidates
+            [cell for cell in self._cells if digit in cell.candidates]
         )
 
     def is_valid(self) -> bool:
